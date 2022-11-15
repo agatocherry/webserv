@@ -132,6 +132,8 @@ Example : error_page 404 srcs/config/files/default_error_pages/404.html
 
 # CGI
 
+Common Gateway Interface is a script execute by a server for manipulating datas before send it to the client.
+
 
 # Ressources
 
@@ -144,3 +146,7 @@ Example : error_page 404 srcs/config/files/default_error_pages/404.html
 [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
 
 [Helpful documentation by 42 students](https://webserv42.notion.site/Webserv-cbb6ab4136ba4b4c8cb4f98109d5fc1f)
+
+[BD for understanding what HTTPS is]https://howhttps.works/fr/
+
+[HTTPS error code but with cat]https://http.cat/
