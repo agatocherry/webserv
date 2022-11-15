@@ -1,4 +1,4 @@
-# webserv
+## webserv
 You must write a HTTP server in C++ 98.
 
 # HTTP/Web server
@@ -9,7 +9,7 @@ What is a web server ? What is a HTTP Server ?
 
 What is a web browser (focus on the http client part) ? What kind of information does a web browser sends to the HTTP server ? (->client requests and server responses)
 
-Client request
+*Client request*
 ```
 GET / HTTP/1.1
 Host: www.example.com
@@ -20,7 +20,8 @@ Accept-Encoding: gzip, deflate, br
 Connection: keep-alive
 ```
 
-Server response
+
+*Server response*
 ```
 HTTP/1.1 200 OK
 Date: Mon, 23 May 2005 22:38:34 GMT
@@ -53,6 +54,7 @@ Connection: close
 
 The configuration file takes inspiration from the "server" part of an NGINX configuration file. A simple example is :
 
+
 ```
 server {
 
@@ -74,28 +76,37 @@ server {
 }
 ```
 
-listen
+
+*listen
+
 	Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests
 
-server_name
+*server_name
+
 	Sets names of the virtual server (here: my_website and my_website.com)
 
-location
+*location
+
 	Sets the correct routes within the file system (here: ex: my_website.com/home.html redirects to ./data/my_website/home.html)
 
-root
+*root
+
 	Sets the path the URI will be added to (here: ex: ./data/my_website)
 
-index
+*index
+
 	The default file to load if the request ends with '/' (here: ./data/my_website/index.html)
 
-autoindex
+*autoindex
+
 	If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory
 
-client_body_buffer_size
+*client_body_buffer_size
+
 	Sets the buffer size to read from a client request body, meaning any POST actions. If the request body is larger, part or the whole body is written in a temporary file
 
-allow_methods
+*allow_methods
+
 	Sets the methods that the server accepts requests of
 
 The server receives a request one a port they listen to (here: 80) or by server name (here: my_website.com)
@@ -119,8 +130,8 @@ Example : error_page 404 srcs/config/files/default_error_pages/404.html
 
 # Ressources
 
-[https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol]Wikipedia
-[http://nginx.org/en/docs/beginners_guide.html#conf_structure]Beginners's guide to NGINX
-[http://nginx.org/en/docs/http/ngx_http_core_module.html#location]Some useful definitions
-[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods]HTTP request methods
-[https://webserv42.notion.site/Webserv-cbb6ab4136ba4b4c8cb4f98109d5fc1f]Helpful documentation by 42 students
+[Wikipedia - HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
+[Beginners's guide to NGINX](http://nginx.org/en/docs/beginners_guide.html#conf_structure)
+[Some useful definitions](http://nginx.org/en/docs/http/ngx_http_core_module.html)
+[HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+[Helpful documentation by 42 students](https://webserv42.notion.site/Webserv-cbb6ab4136ba4b4c8cb4f98109d5fc1f)
