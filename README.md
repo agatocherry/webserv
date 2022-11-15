@@ -77,35 +77,35 @@ server {
 ```
 
 
-*listen
+listen
 
 	Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests
 
-*server_name
+server_name
 
 	Sets names of the virtual server (here: my_website and my_website.com)
 
-*location
+location
 
 	Sets the correct routes within the file system (here: ex: my_website.com/home.html redirects to ./data/my_website/home.html)
 
-*root
+root
 
 	Sets the path the URI will be added to (here: ex: ./data/my_website)
 
-*index
+index
 
 	The default file to load if the request ends with '/' (here: ./data/my_website/index.html)
 
-*autoindex
+autoindex
 
 	If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory
 
-*client_body_buffer_size
+client_body_buffer_size
 
 	Sets the buffer size to read from a client request body, meaning any POST actions. If the request body is larger, part or the whole body is written in a temporary file
 
-*allow_methods
+allow_methods
 
 	Sets the methods that the server accepts requests of
 
@@ -131,7 +131,11 @@ Example : error_page 404 srcs/config/files/default_error_pages/404.html
 # Ressources
 
 [Wikipedia - HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
+
 [Beginners's guide to NGINX](http://nginx.org/en/docs/beginners_guide.html#conf_structure)
+
 [Some useful definitions](http://nginx.org/en/docs/http/ngx_http_core_module.html)
+
 [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+
 [Helpful documentation by 42 students](https://webserv42.notion.site/Webserv-cbb6ab4136ba4b4c8cb4f98109d5fc1f)
