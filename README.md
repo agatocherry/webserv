@@ -1,4 +1,4 @@
-## webserv
+# webserv
 You must write a HTTP server in C++ 98.
 
 # HTTP/Web server
@@ -79,41 +79,46 @@ server {
 
 listen
 
-	Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests
+*Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests*
 
 server_name
 
-	Sets names of the virtual server (here: my_website and my_website.com)
+*Sets names of the virtual server (here: my_website and my_website.com)*
 
 location
 
-	Sets the correct routes within the file system (here: ex: my_website.com/home.html redirects to ./data/my_website/home.html)
+*Sets the correct routes within the file system (here: ex: my_website.com/home.html redirects to ./data/my_website/home.html)*
 
 root
 
-	Sets the path the URI will be added to (here: ex: ./data/my_website)
+*Sets the path the URI will be added to (here: ex: ./data/my_website)*
 
 index
 
-	The default file to load if the request ends with '/' (here: ./data/my_website/index.html)
+*The default file to load if the request ends with '/' (here: ./data/my_website/index.html)*
 
 autoindex
 
-	If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory
+*If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory*
 
 client_body_buffer_size
 
-	Sets the buffer size to read from a client request body, meaning any POST actions. If the request body is larger, part or the whole body is written in a temporary file
+*Sets the buffer size to read from a client request body, meaning any POST actions. If the request body is larger, part or the whole body is written in a temporary file*
 
 allow_methods
 
-	Sets the methods that the server accepts requests of
+*Sets the methods that the server accepts requests of*
 
 The server receives a request one a port they listen to (here: 80) or by server name (here: my_website.com)
+
 The request is : http://my_website.com/hello/home.html:80
+
 The URI is : hello/home.html
+
 The location block that best matches the URI is : /
+
 Therefore the root is : ./data/my_website
+
 The server will send back : ./data/my_website/hello/home.html
 
 If the server does not find the requested file, it will send a response with the appropriate error (in this case : error 404).
