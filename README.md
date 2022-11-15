@@ -147,6 +147,6 @@ Common Gateway Interface is a script execute by a server for manipulating datas 
 
 [Helpful documentation by 42 students](https://webserv42.notion.site/Webserv-cbb6ab4136ba4b4c8cb4f98109d5fc1f)
 
-[BD for understanding what HTTPS is]https://howhttps.works/fr/
+[BD for understanding what HTTPS is](https://howhttps.works/fr/)
 
-[HTTPS error code but with cat]https://http.cat/
+[HTTPS error code but with cat](https://http.cat/)
