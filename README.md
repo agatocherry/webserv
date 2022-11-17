@@ -25,7 +25,7 @@ Connection: keep-alive
 
 - a request line : the method (GET), the URL requested (/) and the protocol version (HTTP/1.1)
 - a required header (Host: ) : the domain name of the server (www.example.com)
-- [https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Request_fields](various optional headers)
+- [various optional headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Request_fields)
 
 
 After receiving the request, the server sends back a message with a status code, and if possible, the requested file.
