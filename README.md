@@ -1,7 +1,9 @@
-# webserv
+# WEBSERV
 You must write a HTTP server in C++ 98.
 
-# Web Server / HTTP / Web Client
+# Introduction
+
+## Web Server / HTTP / Web Client
 
 A web server is an computer software that accepts requests through the World Wide web, usually following the HTTP protocol. It interprets the request message, verifies its syntax, identifies HTTP headers and sends back a response, satisfying the request if possible.
 
@@ -9,9 +11,9 @@ HTTP (or hypertext Transfer Protocol) is a protocol for client/server communicat
 
 A web browser is a software that consults and displays websites, through the request of files to a web server. It is a HTTP client. The most used web browser is Google Chrome.
 
-# Communication between client and server
+## Communication between client and server
 
-After clicking on the link of a website, the web browser will request the files to display said website. For example, http://www.example.com will produce this request :
+After clicking on the link of a website, the web browser will request the files to display said website. For example, http://www.example.com may produce this request :
 
 ```
 GET / HTTP/1.1
@@ -51,7 +53,7 @@ Connection: close
 </html>
 ```
 
-# HTTP Methods
+## HTTP Methods
 
 HTTP defines methods to indicate the requested action to be performed. The subject requires at least three :
 
@@ -59,7 +61,7 @@ HTTP defines methods to indicate the requested action to be performed. The subje
 - POST : method to request the process of the representation sent in the request (ex: posting a message online in a forum)
 - DELETE : method to request the deletion of the resource's state
 
-# HTTP Status and Errors
+## HTTP Status and Errors
 
 1xx informational response – the request was received, continuing process
 
@@ -71,7 +73,7 @@ HTTP defines methods to indicate the requested action to be performed. The subje
 
 5xx server error – the server failed to fulfil an apparently valid request
 
-# Config File
+## Config File
 
 The configuration file takes inspiration from the "server" part of an NGINX configuration file. A simple example is :
 
@@ -98,7 +100,6 @@ server {
 }
 ```
 
-
 ### listen
 Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests
 
@@ -123,10 +124,13 @@ Sets the buffer size to read from a client request body, meaning any POST action
 ### allow_methods
 Sets the methods that the server accepts requests of
 
-### Example
+### error_page
+Sets the file to send with the appropriate error (here: error 404)
+
+### example
 The server receives a request one a port they listen to (here: 80) or by server name (here: my_website.com)
 
-The request is : http://my_website.com/hello/home.html:80
+The request is : http://my_website.com:80/hello/home.html
 
 The URI is : hello/home.html
 
@@ -136,34 +140,9 @@ Therefore the root is : ./data/my_website
 
 The server will send back : ./data/my_website/hello/home.html
 
-If the server does not find the requested file, it will send a response with the appropriate error (in this case : error 404).
+If the server does not find the requested file, it will send a response with the appropriate error and file (here : ./data/my_website/error_files/404.html).
 
-
-# Setting up errors in the config file
-
-When a request results in a error, the server sends back the right code and a error file, for example :
-
-```
-<html>
-	<head>
-		<title>404 Not Found</title>
-	</head>
-	<body>
-		<center>
-			<h1>404 Not Found</h1>
-		</center>
-		<hr><center>nginx/1.22.1</center>
-	</body>
-</html>
-```
-
-In the configuration file, this redirection is setup with the directive "error_page", followed by the error code (here: 404) and the file to send back (here: ./data/my_website/error_files/404.html)
-
-
-# Poll(), Select(), Kqueue() and Epoll()
-
-
-# CGI
+## CGI
 
 The CGI (Common Gateway Interface) is a interface which allows a web server send or receive datas of an application as a data base. A CGI script send a web server request to an application. The script receive the application data and transfer to a web client (browser).
 
@@ -171,7 +150,7 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 
 > Example with a form : in an online form, candidacy or registration, the input datas are process by a CGI before send to a server
 
-## Useful variables
+### Useful variables
 
 | Variables            	| Meaning                                                               	|
 |----------------	|---------------------------------------------------------------	|
@@ -179,6 +158,41 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 | CONTENT_TYPE   	| Type of the content                                           	|
 | QUERY_STRING   	| String as URL                                                 	|
 | REQUEST_METHOD 	| Contains the use methods (GET, POST, HEAD, PUT, DELETE, LINK) 	|
+
+# Code Implementation
+
+## Socket
+
+What is a socket ? How to create a socket with c++ and connect it to ports ?
+[What is a socket](https://beej.us/guide/bgnet/html/split/what-is-a-socket.html)
+
+[Create Socket](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#socket)
+
+[Bind](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#bind)
+
+[Listen](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#listen)
+
+[Accept](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#acceptthank-you-for-calling-port-3490.)
+
+[Close](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#close-and-shutdownget-outta-my-face)
+
+## Read from socket
+
+[Send and Recv](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#sendrecv)
+
+[Poll](https://beej.us/guide/bgnet/html/split/slightly-advanced-techniques.html#poll)
+
+[Select](https://beej.us/guide/bgnet/html/split/slightly-advanced-techniques.html#select)
+
+
+## Send through socket
+
+[Send and Recv](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#sendrecv)
+
+[Send](https://beej.us/guide/bgnet/html/split/man-pages.html#sendman)
+
+## Multiple sockets
+
 
 # Contributors
 
@@ -193,6 +207,8 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 [Helpful documentation by 42 students](https://webserv42.notion.site/Webserv-cbb6ab4136ba4b4c8cb4f98109d5fc1f)
 
 [Tutorial by 42 cclaude student](https://github.com/cclaude42/webserv)
+
+[Beej's Guide to Network Programming](https://beej.us/guide/bgnet/html/split/)
 
 ## HTTP
 
