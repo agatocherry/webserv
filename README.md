@@ -114,7 +114,7 @@ Sets the buffer size to read from a client request body, meaning any POST action
 ### allow_methods
 Sets the methods that the server accepts requests of
 
-
+### Example
 The server receives a request one a port they listen to (here: 80) or by server name (here: my_website.com)
 
 The request is : http://my_website.com/hello/home.html:80
@@ -163,7 +163,7 @@ Common Gateway Interface is a script execute by a server for manipulating datas 
 
 []()
 []()
-[https://github.com/shell02](shdorlin)
+[shdorlin](https://github.com/shell02)
 
 # Ressources
 
