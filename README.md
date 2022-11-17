@@ -169,6 +169,8 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 
 ![](https://www.ionos.fr/digitalguide/fileadmin/_processed_/0/c/csm_une-interface-common-gateway_92a25b62a1.png)
 
+> Example with a form : in an online form, candidacy or registration, the input datas are process by a CGI before send to a server
+
 # Contributors
 
 [agatocherry](https://github.com/agatocherry)
