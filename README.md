@@ -170,8 +170,8 @@ Common Gateway Interface is a script execute by a server for manipulating datas 
 
 # Contributors
 
-[]()
-[]()
+[agatocherry](https://github.com/agatocherry)
+[kejebane](https://github.com/britney94)
 [shdorlin](https://github.com/shell02)
 
 # Ressources
