@@ -61,6 +61,15 @@ HTTP defines methods to indicate the requested action to be performed. The subje
 
 # HTTP Status and Errors
 
+1xx informational response – the request was received, continuing process
+
+2xx successful – the request was successfully received, understood, and accepted
+
+3xx redirection – further action needs to be taken in order to complete the request
+
+4xx client error – the request contains bad syntax or cannot be fulfilled
+
+5xx server error – the server failed to fulfil an apparently valid request
 
 # Config File
 
@@ -182,3 +191,5 @@ Common Gateway Interface is a script execute by a server for manipulating datas 
 [HTTPS error code but with cat](https://http.cat/)
 
 [Tuto de Cclaude](https://github.com/cclaude42/webserv)
+
+[RCF 9110](https://datatracker.ietf.org/doc/html/rfc9110)
