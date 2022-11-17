@@ -173,8 +173,9 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 
 ## Useful variables
 
-| CONTENT_LENGTH 	| Size in octets of the content                                 	|
+|                    	|                                                                	|
 |----------------	|---------------------------------------------------------------	|
+| CONTENT_LENGTH 	| Size in octets of the content                                 	|
 | CONTENT_TYPE   	| Type of the content                                           	|
 | QUERY_STRING   	| String as URL                                                 	|
 | REQUEST_METHOD 	| Contains the use methods (GET, POST, HEAD, PUT, DELETE, LINK) 	|
