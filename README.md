@@ -179,22 +179,30 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 
 [shdorlin](https://github.com/shell02)
 
-# Ressources
-
-[Wikipedia - HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
-
-[Beginners's guide to NGINX](http://nginx.org/en/docs/beginners_guide.html#conf_structure)
-
-[Some useful definitions](http://nginx.org/en/docs/http/ngx_http_core_module.html)
-
-[HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+# Resources
 
 [Helpful documentation by 42 students](https://webserv42.notion.site/Webserv-cbb6ab4136ba4b4c8cb4f98109d5fc1f)
 
+[Tutorial by 42 cclaude student](https://github.com/cclaude42/webserv)
+
+## HTTP
+
+[Wikipedia](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
+
+[Request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+
 [BD for understanding what HTTPS is](https://howhttps.works/fr/)
 
-[HTTPS error code but with cat](https://http.cat/)
-
-[Tuto de Cclaude](https://github.com/cclaude42/webserv)
+[Errors code (but with cat meme)](https://http.cat/)
 
 [RCF 9110](https://datatracker.ietf.org/doc/html/rfc9110)
+
+## NGINX
+
+[Beginners's guide](http://nginx.org/en/docs/beginners_guide.html#conf_structure)
+
+[Some useful definitions](http://nginx.org/en/docs/http/ngx_http_core_module.html)
+
+## CGI
+
+[What is it (fr)](https://www.ionos.fr/digitalguide/sites-internet/developpement-web/quest-ce-que-la-cgi/)
