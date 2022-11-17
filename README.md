@@ -1,15 +1,18 @@
 # webserv
 You must write a HTTP server in C++ 98.
 
-# HTTP/Web server
+# Web Server / HTTP / Web Client
 
-What is a web server ? What is a HTTP Server ?
+A web server is an computer software that accepts requests through the World Wide web, usually following the HTTP protocol. It interprets the request message, verifies its syntax, identifies HTTP headers and sends back a response, satisfying the request if possible.
 
-# Web browser/HTTP Client
+HTTP (or hypertext Transfer Protocol) is a protocol for client/server communication, meaning that each exchange between a client and a web server follows a set of rules.
 
-What is a web browser (focus on the http client part) ? What kind of information does a web browser sends to the HTTP server ? (->client requests and server responses)
+A web browser is a software that consults and displays websites, through the request of files to a web server. It is a HTTP client. The most used web browser is Google Chrome.
 
-*Client request*
+# Communication between client and server
+
+After clicking on the link of a website, the web browser will request the files to display said website. For example, http://www.example.com will produce this request :
+
 ```
 GET / HTTP/1.1
 Host: www.example.com
@@ -20,8 +23,13 @@ Accept-Encoding: gzip, deflate, br
 Connection: keep-alive
 ```
 
+- a request line : the method (GET), the URL requested (/) and the protocol version (HTTP/1.1)
+- a required header (Host: ) : the domain name of the server (www.example.com)
+- [https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Request_fields](various optional headers)
 
-*Server response*
+
+After receiving the request, the server sends back a message with a status code, and if possible, the requested file.
+
 ```
 HTTP/1.1 200 OK
 Date: Mon, 23 May 2005 22:38:34 GMT
@@ -43,9 +51,13 @@ Connection: close
 </html>
 ```
 
-
 # HTTP Methods
 
+HTTP defines methods to indicate the requested action to be performed. The subject requires at least three :
+
+- GET : method to request a representation of the resource's state. It should only retrieve data (ex: receiving some html code)
+- POST : method to request the process of the representation sent in the request (ex: posting a message online in a forum)
+- DELETE : method to request the deletion of the resource's state
 
 # HTTP Status and Errors
 
@@ -58,7 +70,7 @@ The configuration file takes inspiration from the "server" part of an NGINX conf
 ```
 server {
 
-	listen			0.0.0.0:81
+	listen			0.0.0.0:80
 	server_name		my_website my_website.com
 
 	location		/ {
@@ -73,41 +85,35 @@ server {
 	autoindex				off
 	client_body_buffer_size	1000
 	allow_methods			GET POST DELETE
+	error_page 404			./data/my_website/error_files/404.html
 }
 ```
 
 
-listen
+### listen
+Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests
 
-*Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests*
+### server_name
+Sets names of the virtual server (here: my_website and my_website.com)
 
-server_name
+### location
+Sets the correct routes within the file system (here: ex: my_website.com/home.html redirects to ./data/my_website/home.html)
 
-*Sets names of the virtual server (here: my_website and my_website.com)*
+### root
+Sets the path the URI will be added to (here: ex: ./data/my_website)
 
-location
+### index
+The default file to load if the request ends with '/' (here: ./data/my_website/index.html)
 
-*Sets the correct routes within the file system (here: ex: my_website.com/home.html redirects to ./data/my_website/home.html)*
+### autoindex
+If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory
 
-root
+### client_body_buffer_size
+Sets the buffer size to read from a client request body, meaning any POST actions. If the request body is larger, part or the whole body is written in a temporary file
 
-*Sets the path the URI will be added to (here: ex: ./data/my_website)*
+### allow_methods
+Sets the methods that the server accepts requests of
 
-index
-
-*The default file to load if the request ends with '/' (here: ./data/my_website/index.html)*
-
-autoindex
-
-*If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory*
-
-client_body_buffer_size
-
-*Sets the buffer size to read from a client request body, meaning any POST actions. If the request body is larger, part or the whole body is written in a temporary file*
-
-allow_methods
-
-*Sets the methods that the server accepts requests of*
 
 The server receives a request one a port they listen to (here: 80) or by server name (here: my_website.com)
 
@@ -123,9 +129,27 @@ The server will send back : ./data/my_website/hello/home.html
 
 If the server does not find the requested file, it will send a response with the appropriate error (in this case : error 404).
 
+
 # Setting up errors in the config file
 
-Example : error_page 404 srcs/config/files/default_error_pages/404.html
+When a request results in a error, the server sends back the right code and a error file, for example :
+
+```
+<html>
+	<head>
+		<title>404 Not Found</title>
+	</head>
+	<body>
+		<center>
+			<h1>404 Not Found</h1>
+		</center>
+		<hr><center>nginx/1.22.1</center>
+	</body>
+</html>
+```
+
+In the configuration file, this redirection is setup with the directive "error_page", followed by the error code (here: 404) and the file to send back (here: ./data/my_website/error_files/404.html)
+
 
 # Poll(), Select(), Kqueue() and Epoll()
 
@@ -134,6 +158,12 @@ Example : error_page 404 srcs/config/files/default_error_pages/404.html
 
 Common Gateway Interface is a script execute by a server for manipulating datas before send it to the client.
 
+
+# Contributors
+
+[]()
+[]()
+[https://github.com/shell02](shdorlin)
 
 # Ressources
 
