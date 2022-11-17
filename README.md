@@ -165,8 +165,9 @@ In the configuration file, this redirection is setup with the directive "error_p
 
 # CGI
 
-Common Gateway Interface is a script execute by a server for manipulating datas before send it to the client.
+The CGI (Common Gateway Interface) is a interface which allows a web server send or receive datas of an application as a data base. A CGI script send a web server request to an application. The script receive the application data and transfer to a web client (browser).
 
+![](https://www.ionos.fr/digitalguide/fileadmin/_processed_/0/c/csm_une-interface-common-gateway_92a25b62a1.png)
 
 # Contributors
 
