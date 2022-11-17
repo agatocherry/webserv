@@ -5,7 +5,7 @@ You must write a HTTP server in C++ 98.
 
 ## Web Server / HTTP / Web Client
 
-A web server is an computer software that accepts requests through the World Wide web, usually following the HTTP protocol. It interprets the request message, verifies its syntax, identifies HTTP headers and sends back a response, satisfying the request if possible.
+A web server is an computer software that accepts requests through the World Wide Web, usually following the HTTP protocol. It interprets the request message, verifies its syntax, identifies HTTP headers and sends back a response, satisfying the request if possible.
 
 HTTP (or hypertext Transfer Protocol) is a protocol for client/server communication, meaning that each exchange between a client and a web server follows a set of rules.
 
@@ -28,6 +28,7 @@ Connection: keep-alive
 - a request line : the method (GET), the URL requested (/) and the protocol version (HTTP/1.1)
 - a required header (Host: ) : the domain name of the server (www.example.com)
 - [various optional headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Request_fields)
+- a body (no body in this example, but used for POST method)
 
 
 After receiving the request, the server sends back a message with a status code, and if possible, the requested file.
@@ -96,38 +97,38 @@ server {
 	autoindex				off
 	client_body_buffer_size	1000
 	allow_methods			GET POST DELETE
-	error_page 404			./data/my_website/error_files/404.html
+	error_page 404			./data/error_files/404.html
 }
 ```
 
 ### listen
-Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests
+> Sets the address of the host (here: 0.0.0.0) and port (here: 80) on which the server will receive requests
 
 ### server_name
-Sets names of the virtual server (here: my_website and my_website.com)
+> Sets names of the virtual server (here: my_website and my_website.com)
 
 ### location
-Sets the correct routes within the file system (here: ex: my_website.com/home.html redirects to ./data/my_website/home.html)
+> Sets the correct routes within the file system (here: ex: my_website.com/home.html redirects to ./data/my_website/home.html)
 
 ### root
-Sets the path the URI will be added to (here: ex: ./data/my_website)
+> Sets the path the URI will be added to (here: ex: ./data/my_website)
 
 ### index
-The default file to load if the request ends with '/' (here: ./data/my_website/index.html)
+> The default file to load if the request ends with '/' (here: ./data/my_website/index.html)
 
 ### autoindex
-If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory
+> If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory
 
 ### client_body_buffer_size
-Sets the buffer size to read from a client request body, meaning any POST actions. If the request body is larger, part or the whole body is written in a temporary file
+> Sets the buffer size to read from a client request body, meaning any POST actions. If the request body is larger, part or the whole body is written in a temporary file
 
 ### allow_methods
-Sets the methods that the server accepts requests of
+> Sets the methods that the server accepts requests of
 
 ### error_page
-Sets the file to send with the appropriate error (here: error 404)
+> Sets the file to send with the appropriate error (here: error 404)
 
-### example
+### Example
 The server receives a request one a port they listen to (here: 80) or by server name (here: my_website.com)
 
 The request is : http://my_website.com:80/hello/home.html
@@ -140,7 +141,7 @@ Therefore the root is : ./data/my_website
 
 The server will send back : ./data/my_website/hello/home.html
 
-If the server does not find the requested file, it will send a response with the appropriate error and file (here : ./data/my_website/error_files/404.html).
+If the server does not find the requested file, it will send a response with the appropriate error and file (here : ./data/error_files/404.html).
 
 ## CGI
 
@@ -164,6 +165,7 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 ## Socket
 
 What is a socket ? How to create a socket with c++ and connect it to ports ?
+
 [What is a socket](https://beej.us/guide/bgnet/html/split/what-is-a-socket.html)
 
 [Create Socket](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#socket)
@@ -183,6 +185,8 @@ What is a socket ? How to create a socket with c++ and connect it to ports ?
 [Poll](https://beej.us/guide/bgnet/html/split/slightly-advanced-techniques.html#poll)
 
 [Select](https://beej.us/guide/bgnet/html/split/slightly-advanced-techniques.html#select)
+
+[Nonblocking Select](https://www.ibm.com/docs/en/i/7.2?topic=designs-example-nonblocking-io-select)
 
 
 ## Send through socket
@@ -221,6 +225,7 @@ What is a socket ? How to create a socket with c++ and connect it to ports ?
 [Errors code (but with cat meme)](https://http.cat/)
 
 [RCF 9110](https://datatracker.ietf.org/doc/html/rfc9110)
+
 
 ## NGINX
 
