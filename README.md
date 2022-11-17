@@ -174,7 +174,9 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 # Contributors
 
 [agatocherry](https://github.com/agatocherry)
+
 [kejebane](https://github.com/britney94)
+
 [shdorlin](https://github.com/shell02)
 
 # Ressources
