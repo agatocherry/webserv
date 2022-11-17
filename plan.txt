@@ -2,12 +2,25 @@ Tester sur NGINX :
 - envoyer un signal au serveur depuis le terminal, afin d'utiliser le server_name
 - mettre plusieurs ports differents dans la directive "listen" (est-ce que les deux ports sont ecoutes ou est-ce qu'il y a une erreur...?)
 - que veut dire la commande cgi-pass et cgi-param ?
+- comment recuperer les requetes et les reponses depuis le navigateur et le serveur NGINX
 
 Questions :
 - Est-ce qu'un socket peut ecouter plusieurs ports ?
+- Que veut dire "upload files" dans le sujet
+- Que veut dire "HTTP redirection" dans le sujet
 
 Tester 42 :
 - creer les dossiers et fichiers demandes par le tester de 42
+
+Structure :
+- creer un fichier de configuration principale (avec error_page entre autres)
+- creer un fichier de configuration avec toutes les demandes du sujet (routes, cgi, firectory listing...)
+- creer un dossier pour tester cgi
+
+Documentation :
+- finir la documentation sur la partie implementation (expliquer ce qu'est un socket et ce que font les fonctions dans le cadre du developpement de serveur...)
+- mettre une ligne cgi_pass dans le fichier de configuration d'exemple et expliquer ce qu'elle signifie
+- mettre ce lien : https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa dans les ressources
 
 Implementation :
 - Decider de la structure des classes (Une classe principale qui a autant d'instanciation de classes "Servers" qui ont eux-memes une instanciation de classe "Socket"...?)
@@ -21,3 +34,4 @@ Implementation :
 - Une fois le fichier trouve ou pas, creer une reponse http -> quelle classe s'en occupe, de quelles informations a-t-elle besoin
 - Quelle classe s'occupe de renvoyer la reponse http, de quelles informations a-t-elle besoin
 - Se renseigner sur le cgi
+- Comprendre comment rendre select nonblocking
