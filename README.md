@@ -25,7 +25,7 @@ Connection: keep-alive
 
 - a request line : the method (GET), the URL requested (/) and the protocol version (HTTP/1.1)
 - a required header (Host: ) : the domain name of the server (www.example.com)
-- [https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Request_fields](various optional headers)
+- [various optional headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Request_fields)
 
 
 After receiving the request, the server sends back a message with a status code, and if possible, the requested file.
@@ -123,7 +123,7 @@ Sets the buffer size to read from a client request body, meaning any POST action
 ### allow_methods
 Sets the methods that the server accepts requests of
 
-
+### Example
 The server receives a request one a port they listen to (here: 80) or by server name (here: my_website.com)
 
 The request is : http://my_website.com/hello/home.html:80
@@ -172,7 +172,7 @@ Common Gateway Interface is a script execute by a server for manipulating datas 
 
 []()
 []()
-[https://github.com/shell02](shdorlin)
+[shdorlin](https://github.com/shell02)
 
 # Ressources
 
