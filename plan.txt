@@ -1,3 +1,6 @@
+Agathe:
+Faire les issues (aujd nornalement)
+
 Tester sur NGINX :
 - envoyer un signal au serveur depuis le terminal, afin d'utiliser le server_name
 - mettre plusieurs ports differents dans la directive "listen" (est-ce que les deux ports sont ecoutes ou est-ce qu'il y a une erreur...?)
@@ -9,19 +12,23 @@ Questions :
 - Que veut dire "upload files" dans le sujet
 - Que veut dire "HTTP redirection" dans le sujet
 
+Agathe :
 Tester 42 :
 - creer les dossiers et fichiers demandes par le tester de 42
 
-Structure :
+Agathe :
+Structure (./config) :
 - creer un fichier de configuration principale (avec error_page entre autres)
 - creer un fichier de configuration avec toutes les demandes du sujet (routes, cgi, firectory listing...)
 - creer un dossier pour tester cgi
 
+Agathe
 Documentation :
 - finir la documentation sur la partie implementation (expliquer ce qu'est un socket et ce que font les fonctions dans le cadre du developpement de serveur...)
 - mettre une ligne cgi_pass dans le fichier de configuration d'exemple et expliquer ce qu'elle signifie
 - mettre ce lien : https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa dans les ressources
 
+Shellen :
 Implementation :
 - Decider de la structure des classes (Une classe principale qui a autant d'instanciation de classes "Servers" qui ont eux-memes une instanciation de classe "Socket"...?)
 - Decider dans quelle classe sera parser le configuration file
