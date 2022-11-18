@@ -1,5 +1,8 @@
 # WEBSERV
+
 You must write a HTTP server in C++ 98.
+
+> Work with Mozilla Firefox
 
 # Introduction
 
