@@ -219,6 +219,8 @@ What is a socket ? How to create a socket with c++ and connect it to ports ?
 
 ## HTTP
 
+[Build a simple http server](https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa)
+
 [Wikipedia](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
 
 [Request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
