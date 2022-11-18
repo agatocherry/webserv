@@ -13,6 +13,7 @@ Questions :
 - Que veut dire "HTTP redirection" dans le sujet
 - Qu'est-ce que "chunked request" dans le sujet ?
 - Faire une explication de toute la partie CGI du sujet ?
+- Quesqu'il se passe si ont depasse le client body buffer_size ? Ou vas le fichier tmp ?
 
 Agathe :
 Tester 42 :
