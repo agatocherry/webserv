@@ -11,6 +11,8 @@ Questions :
 - Est-ce qu'un socket peut ecouter plusieurs ports ?
 - Que veut dire "upload files" dans le sujet
 - Que veut dire "HTTP redirection" dans le sujet
+- Qu'est-ce que "chunked request" dans le sujet ?
+- Faire une explication de toute la partie CGI du sujet ?
 
 Agathe :
 Tester 42 :
