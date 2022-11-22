@@ -167,7 +167,9 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 
 ## Socket
 
-What is a socket ? How to create a socket with c++ and connect it to ports ?
+A socket is attach to a port, for doing the link between two socket. You need to initialize the socket for doing this link, and waiting for the packet and close the socket. 
+
+![](https://miro.medium.com/max/1400/1*WHbABxslqPh8QzXku_-QtQ.png)
 
 [What is a socket](https://beej.us/guide/bgnet/html/split/what-is-a-socket.html)
 
