@@ -6,7 +6,7 @@ struct Location
 	char	*uri;
 	char	*root;
 	char	*index;
-	int		allow[3];
+	int		allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
 };
 
 
