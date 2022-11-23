@@ -213,6 +213,8 @@ A socket is attach to a port, for doing the link between two socket. You need to
 
 # Resources
 
+[Grille de correction](https://github.com/mharriso/school21-checklists/blob/master/ng_5_webserv.pdf)
+
 [Helpful documentation by 42 students](https://webserv42.notion.site/Webserv-cbb6ab4136ba4b4c8cb4f98109d5fc1f)
 
 [Tutorial by 42 cclaude student](https://github.com/cclaude42/webserv)
@@ -232,7 +234,6 @@ A socket is attach to a port, for doing the link between two socket. You need to
 [Errors code (but with cat meme)](https://http.cat/)
 
 [RCF 9110](https://datatracker.ietf.org/doc/html/rfc9110)
-
 
 ## NGINX
 
