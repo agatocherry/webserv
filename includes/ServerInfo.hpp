@@ -23,7 +23,7 @@ class ServerInfo {
 		Location	_loc;
 		int			allow[3];
 		long		clientSize;
-		int			autoindex;
+		int			autoindex; //0 si off, 1 si on
 
 };
 
