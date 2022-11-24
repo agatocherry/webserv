@@ -227,6 +227,8 @@ A socket is attach to a port, for doing the link between two socket. You need to
 
 [Wikipedia](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
 
+[How the web works](https://www.garshol.priv.no/download/text/http-tut.html)
+
 [Request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
 
 [BD for understanding what HTTPS is](https://howhttps.works/fr/)
