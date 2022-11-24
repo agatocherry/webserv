@@ -97,6 +97,10 @@ server {
 		root					./data/my_website/test
 	}
 	
+	location		/cgi {
+		cgipass		./testers/ubuntu_cgi_tester
+	}
+	
 	autoindex				off
 	client_body_buffer_size	1000
 	allow_methods			GET POST DELETE
@@ -118,6 +122,9 @@ server {
 
 ### index
 > The default file to load if the request ends with '/' (here: ./data/my_website/index.html)
+
+### cgipass
+> The CGI script to use
 
 ### autoindex
 > If "on" and no index file are set, requests ending with '/' produces a list of files and folders within the requested directory
