@@ -178,20 +178,49 @@ A [socket](https://beej.us/guide/bgnet/html/split/what-is-a-socket.html) is atta
 
 ![](https://miro.medium.com/max/1400/1*WHbABxslqPh8QzXku_-QtQ.png)
 
+### Socket
+
 We can create a socket with the function [socket](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#socket).
+
 ```
 int s;
 s = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
 ```
+
 The function retun a socket descriptor or a -1 if error.
 
-[Bind](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#bind)
+### Bind
 
-[Listen](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#listen)
+Once you have a socket, you might have to associate that socket with a port on your local machine. [Bind](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#bind) also returns -1 on error and sets errno to the error’s value.
 
-[Accept](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#acceptthank-you-for-calling-port-3490.)
+```
+bind(sockfd, (struct sockaddr *)&my_addr, sizeof my_addr);
+```
 
-[Close](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#close-and-shutdownget-outta-my-face)
+### Listen
+
+If you don’t want to connect to a remote host, you need to use [listen](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#listen). Again, as per usual, listen() returns -1 and sets errno on error.
+
+```
+int listen(int sockfd, int backlog); 
+```
+
+### Accept
+
+When someone try to connect to your machine on a port that you are listen on, you need to [accept](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#acceptthank-you-for-calling-port-3490.) the connection. Guess what? accept() returns -1 and sets errno if an error occurs. Betcha didn’t figure that.
+
+```
+int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen); 
+```
+
+### Close
+
+[Close](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#close-and-shutdownget-outta-my-face) is for closing connection.
+
+```
+close(sockfd); 
+```
+Just in case you want a little more control over how the socket closes, you can use the shutdown function. It allows you to cut off communication in a certain direction.
 
 ## Read from socket
 
