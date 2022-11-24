@@ -224,23 +224,49 @@ Just in case you want a little more control over how the socket closes, you can 
 
 ## Read from socket
 
-[Send and Recv](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#sendrecv)
+### Send and recv
 
-[Poll](https://beej.us/guide/bgnet/html/split/slightly-advanced-techniques.html#poll)
+These two functions [send and recv](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#sendrecv) are for communicating over stream sockets or connected datagram sockets. 
 
-[Select](https://beej.us/guide/bgnet/html/split/slightly-advanced-techniques.html#select)
+Send returns the number of bytes actually sent out.
 
-[Nonblocking Select](https://www.ibm.com/docs/en/i/7.2?topic=designs-example-nonblocking-io-select)
+```
+bytes_sent = send(sockfd, msg, len, 0);
+```
 
+Rec returns the number of bytes actually read into the buffer, or -1 on error.
 
-## Send through socket
+```
+int recv(int sockfd, void *buf, int len, int flags);
+```
 
-[Send and Recv](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#sendrecv)
+### Poll
 
-[Send](https://beej.us/guide/bgnet/html/split/man-pages.html#sendman)
+You can avoid polling by using the [poll](https://beej.us/guide/bgnet/html/split/slightly-advanced-techniques.html#poll) system call.
 
-## Multiple sockets
+```
+int poll(struct pollfd fds[], nfds_t nfds, int timeout);
+```
 
+| Macro         | Description                                                        |
+|---------------|--------------------------------------------------------------------|
+| POLLIN	| Alert me when data is ready to recv() on this socket.              |
+| POLLOUT   	| Alert me when I can send() data to this socket without blocking.   |
+
+### Select
+
+[Select](https://beej.us/guide/bgnet/html/split/slightly-advanced-techniques.html#select) gives you the power to monitor several sockets at the same time. It’ll tell you which ones are ready for reading, which are ready for writing, and which sockets have raised exceptions, if you really want to know that.
+
+```
+int select(int numfds, fd_set *readfds, fd_set *writefds,
+           fd_set *exceptfds, struct timeval *timeout);
+```
+
+### Nonblocking select
+
+![](https://user-images.githubusercontent.com/56171505/203798267-0ab62164-6b18-4684-bcfe-12718a148ce6.png)
+
+Example of a [nonblocking select](https://www.ibm.com/docs/en/i/7.2?topic=designs-example-nonblocking-io-select) program.
 
 # Contributors
 
