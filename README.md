@@ -174,13 +174,16 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 
 ## Socket
 
-A socket is attach to a port, for doing the link between two socket. You need to initialize the socket for doing this link, and waiting for the packet and close the socket. 
+A [socket](https://beej.us/guide/bgnet/html/split/what-is-a-socket.html) is attach to a port, for doing the link between two socket. You need to initialize the socket for doing this link, and waiting for the packet and close the socket. 
 
 ![](https://miro.medium.com/max/1400/1*WHbABxslqPh8QzXku_-QtQ.png)
 
-[What is a socket](https://beej.us/guide/bgnet/html/split/what-is-a-socket.html)
-
-[Create Socket](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#socket)
+We can create a socket with the function [socket](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#socket).
+```
+int s;
+s = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+```
+The function retun a socket descriptor or a -1 if error.
 
 [Bind](https://beej.us/guide/bgnet/html/split/system-calls-or-bust.html#bind)
 
