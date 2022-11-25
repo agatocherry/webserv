@@ -6,7 +6,7 @@
 #    By: shdorlin <shdorlin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 18:32:32 by shdorlin          #+#    #+#              #
-#    Updated: 2022/11/17 18:32:36 by shdorlin         ###   ########.fr        #
+#    Updated: 2022/11/25 11:21:02 by agcolas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,16 +20,16 @@ OBJS = $(SRCS:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(NAME)
+	@ $(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@ $(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	@ rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@ rm -f $(NAME)
 
 re: fclean all
 
