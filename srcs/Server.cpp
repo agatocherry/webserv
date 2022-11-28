@@ -1,6 +1,7 @@
 
 
-#include "Server.cpp"
+#include "Server.hpp"
+#include "ServerInfo.hpp"
 
 
 Server::Server(ServerInfo infos, int port = 80)
