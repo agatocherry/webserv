@@ -80,9 +80,8 @@ Server::Server(Server& copy)
 		std::cout << "Error in listening\n";
         	return ;
 	}
-	this->_infos = copy._infos;		//IMPOSSIBLE (private attribute)
-	this->_default = copy._default;		//IMPOSSIBLE
-	this->_infos = copy._infos;		//IMPOSSIBLE
+	this->_infos = copy.getAllInfos;	//Using getters now
+	this->_default = copy.getDefaultInfos;	//IMPOSSIBLE
 	this->size = this->_infos.size();	//IMPOSSIBLE
 }
 
