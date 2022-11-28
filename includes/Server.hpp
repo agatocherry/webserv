@@ -17,6 +17,9 @@ class Server {
 		int	getSocket();
 		int	addNewinfo(ServerInfo& new_infos);
 
+		ServerInfo	getDefaultInfos(void);
+		ServerInfo	*getAllInfos(void);
+
 	private:
 		int			_socket;
 		int			_size;

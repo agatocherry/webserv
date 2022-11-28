@@ -112,3 +112,14 @@ int	Server::addNewInfo(ServerInfo& new_infos)
 	this->size++;
 }
 
+ServerInfo	Server::getDefaultInfos(void)
+{
+	// Simple getter : default infos
+	return (this->_default);
+}
+
+ServerInfo	*Server::getAllInfos(void);
+{
+	// Simple getter : vector of infos
+	return (this->this->_infos;
+}
