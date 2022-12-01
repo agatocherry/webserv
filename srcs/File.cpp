@@ -1,6 +1,6 @@
 #include "../includes/File.hpp"
 
-void	File::initialise(char *filename)
+File::File(char *filename)
 {
 	string tmp;
 	this->name = filename;
@@ -47,15 +47,13 @@ std::string File::getLine()
 }
 
 // Example for use :
-int	main(int argc, char **argv)
-{
-	File file;
-
-	file.initialise(argv[argc - 1]);
-	std::cout << "File name : " << std::endl << file.getName() << std::endl << std::endl;
-	std::cout << "File getline :" << std::endl;
-	std::string tmp;
-	while(file.getEnd() == 0)
-		std::cout << file.getLine() << std::endl;
-	return 0;
-}
+// int	main(int argc, char **argv)
+// {
+// 	File file(argv[argc - 1]);
+// 	std::cout << "File name : " << std::endl << file.getName() << std::endl << std::endl;
+// 	std::cout << "File getline :" << std::endl;
+// 	std::string tmp;
+// 	while(file.getEnd() == 0)
+// 		std::cout << file.getLine() << std::endl;
+// 	return 0;
+// }
