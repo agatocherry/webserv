@@ -6,7 +6,7 @@ void	File::initialise(char *filename)
 	this->name = filename;
 	this->lineHistory = 0;
 	this->maxLine = 0;
-	this->isEnd = 0;
+	this->end = 0;
 	ifstream fd(filename);
 	while (getline (fd, tmp))
 	{
@@ -26,6 +26,11 @@ int	File::getMaxLine()
 	return (this->maxLine);
 }
 
+int	File::getEnd()
+{
+	return (this->end);
+}
+
 std::string File::getLine()
 {
 	std::string line;
@@ -37,7 +42,7 @@ std::string File::getLine()
 	line = content[i];
 	lineHistory++;
 	if (lineHistory >= maxLine)
-		this->isEnd = 1;
+		this->end = 1;
 	return line;
 }
 
@@ -50,7 +55,7 @@ int	main(int argc, char **argv)
 	std::cout << "File name : " << std::endl << file.getName() << std::endl << std::endl;
 	std::cout << "File getline :" << std::endl;
 	std::string tmp;
-	while(file.isEnd == 0)
+	while(file.getEnd() == 0)
 		std::cout << file.getLine() << std::endl;
 	return 0;
 }
