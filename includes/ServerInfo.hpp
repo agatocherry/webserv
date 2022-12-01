@@ -9,7 +9,6 @@ struct Location
 	int		allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
 };
 
-
 class ServerInfo {
 
 	public:

@@ -1,15 +1,16 @@
 #include "../includes/File.hpp"
 
-void	File::initialise(char *filename)
+File::File(char *filename)
 {
 	string tmp;
 	this->name = filename;
 	this->lineHistory = 0;
 	this->maxLine = 0;
+	this->end = 0;
 	ifstream fd(filename);
 	while (getline (fd, tmp))
 	{
-		this->content = content + tmp + '\n';
+		this->content.push_back(tmp);
 		maxLine++;
 	}
 	fd.close(); 
@@ -20,57 +21,39 @@ std::string	File::getName()
 	return (this->name);
 }
 
-std::string	File::getContent()
-{
-	return (this->content);
-}
-
 int	File::getMaxLine()
 {
 	return (this->maxLine);
 }
 
-std::string File::getLine(int nbLine)
+int	File::getEnd()
+{
+	return (this->end);
+}
+
+std::string File::getLine()
 {
 	std::string line;
 	if (lineHistory >= maxLine)
 		return line;
 	int	i = 0;
-	int	j = 0;
-	int k = 0;
-	while (j < lineHistory)
-	{
-		while (this->content[i] != '\n')
-			i++;
+	while (i < lineHistory)
 		i++;
-		j++;
-	}
-	while (k < nbLine && this->content[i])
-	{
-		while (this->content[i] != '\n')
-		{
-			line = line + this->content[i];
-			i++;
-		}
-		line = line + '\n';
-		i++;
-		k++;
-		lineHistory++;
-	}
+	line = content[i];
+	lineHistory++;
+	if (lineHistory >= maxLine)
+		this->end = 1;
 	return line;
 }
 
 // Example for use :
 // int	main(int argc, char **argv)
 // {
-// 	File file;
-
-// 	file.initialise(argv[argc - 1]);
+// 	File file(argv[argc - 1]);
 // 	std::cout << "File name : " << std::endl << file.getName() << std::endl << std::endl;
-// 	std::cout << "File content : " << std::endl << file.getContent() << std::endl;
-// 	std::cout << "File get line :" << std::endl;
+// 	std::cout << "File getline :" << std::endl;
 // 	std::string tmp;
-// 	while((tmp = file.getLine(10)) != "")
-// 		std::cout << tmp;
+// 	while(file.getEnd() == 0)
+// 		std::cout << file.getLine() << std::endl;
 // 	return 0;
 // }

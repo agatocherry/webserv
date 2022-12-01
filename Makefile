@@ -34,6 +34,6 @@ fclean: clean
 re: fclean all
 
 test: all
-	@ ./webserv config/default.conf
+	@ valgrind ./webserv config/default.conf
 
 .PHONY: all clean fclean re test
