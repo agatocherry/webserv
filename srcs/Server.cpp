@@ -33,21 +33,18 @@ Server::Server(ServerInfo infos, int port = 80)
 		std::cout << "Error in binding\n";
         	return ;
 	}
-	if (listen(this->socket, 10) < 0) //Max nb of queuing requests = 10 for now
+	if (listen(this->socket, 10) < 0)
 	{
+		//Max nb of queuing requests = 10,
+		//too low to survive siege (come back later)
 		std::cout << "Error in listening\n";
         	return ;
 	}
 	////////////////////////////////////
 	// Setting the Default ServerInfo
-	// data here, (come back later)
-/*	this->default->ip = 
-	this->default->server_name = 
-	this->default->_loc = 
-	this->default->allow = 
-	this->default->clientSize = 
-	this->default->autoindex = 
-*/	////////////////////////////////////
+	// data here, (come back later : DONE)
+	this->_default = infos;
+	////////////////////////////////////
 	this->_infos.push_back(infos);
 	this->size = this->_infos.size();
 }
@@ -101,6 +98,11 @@ int	Server::getSocket(void)
 	return (this->socket);
 }
 
+void	Server::setSocket(int socket_descriptor)
+{
+	// Simple setter : socket descriptor
+	this->socket = socket_descriptor;
+}
 
 int	Server::addNewInfo(ServerInfo& new_infos)
 {

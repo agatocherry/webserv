@@ -6,15 +6,10 @@
 ServerInfo::ServerInfo(void)
 {
 	// Default constructor
-	this->ip = 0;
-	this->server_name = "localhost";
-	{
-		this->_loc.uri = "http://localhost";	//??
-		this->_loc.root = "/root/"; 		//??
-		this->_loc.index = "/index.html";	//??
-	}
-	this->clientSize = 0;
-	this->autoindex = 0; //1 ?
+	this->ip = "0.0.0.80";			//Variable
+	this->server_name = "localhost";	//Variable
+	this->client_body_buffer_size = 0; 	//Variable
+	this->autoindex = 0; 			//Variable
 }
 
 ServerInfo::setIp(std::string ip)

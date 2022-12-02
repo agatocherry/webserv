@@ -15,6 +15,7 @@ class Server {
 		Server&	operator=(Server& copy);
 
 		int	getSocket();
+		void	setSocket(int socket_descriptor);
 		int	addNewinfo(ServerInfo& new_infos);
 
 		ServerInfo	getDefaultInfos(void);

@@ -20,12 +20,12 @@ class ServerInfo {
 		void	setClentSize(long x);
 
 	private:
-		int		ip; //string might be better ?
-		std::string	server_name;
+		std::string			ip; // :)
+		std::string			server_name;
 		std::string::vector<Location>	_loc;
-		int			allow[3];
-		long		clientSize;
-		int			autoindex; //0 si off, 1 si on
+		int				allow[3];
+		long				client_body_buffer_size;
+		int				autoindex; //0 si off, 1 si on
 
 };
 
