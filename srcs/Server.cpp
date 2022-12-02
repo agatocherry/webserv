@@ -58,7 +58,10 @@ Server::Server(Server& copy)
 	// own socket fd.
 	// The rest is similar to normal construction.
 	this->socket = dup(copy.socket);
-	if (this->socket == -1)
+	this->_default = copy.getDefaultInfos();
+	this->_infos = copy.getAllInfos();
+	this->size = this->_infos.size();
+/*	if (this->socket == -1)
 	{
 		std::cout << "Error in socket generation\n";
         	return ;
@@ -80,6 +83,7 @@ Server::Server(Server& copy)
 	this->_infos = copy.getAllInfos;	//Using getters now
 	this->_default = copy.getDefaultInfos;	//IMPOSSIBLE
 	this->size = this->_infos.size();	//IMPOSSIBLE
+*/
 }
 
 
