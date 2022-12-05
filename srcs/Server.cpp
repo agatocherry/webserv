@@ -1,19 +1,19 @@
 
 
 #include "Server.hpp"
-#include "ServerInfo.hpp"
 
 
-Server::Server(ServerInfo infos, int port = 80)
+Server::Server(ServerInfo infos, int port)
 {
-	struct sockaddr_in 			address;
+	struct sockaddr_in 		address;
     
 	// Generating socket file descriptor
 	// DOMAIN	= Ipv4 Internet protocol
 	// TYPE		= Non-blocking socket descriptor
 	// 		  (prevent usage of fcntl()
 	// PROTOCOL	= Default (unspecified)
-	if ((this->socket = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+	port = 80;
+	if ((this->_socket = socket(AF_INET, SOCK_STREAM, 0)) == 0)
 	{
 		std::cout << "Error in socket generation\n";
         	return ;
@@ -28,12 +28,13 @@ Server::Server(ServerInfo infos, int port = 80)
 	// socket-address struct parameters
 	// +
 	// Start listening on the socket
-	if (bind(this->socket, (struct sockaddr *)&address, sizeof(address))<0)
+	if (bind(this->_socket, (struct sockaddr *)&address, sizeof(address)) < 0)
 	{
 		std::cout << "Error in binding\n";
+		perror("Error");
         	return ;
 	}
-	if (listen(this->socket, 10) < 0)
+	if (listen(this->_socket, 10) < 0)
 	{
 		//Max nb of queuing requests = 10,
 		//too low to survive siege (come back later)
@@ -43,25 +44,26 @@ Server::Server(ServerInfo infos, int port = 80)
 	////////////////////////////////////
 	// Setting the Default ServerInfo
 	// data here, (come back later : DONE)
-	this->_default = infos;
+	this->_default = &infos;
 	////////////////////////////////////
 	this->_infos.push_back(infos);
-	this->size = this->_infos.size();
+	this->_size = this->_infos.size();
 }
 
 
 Server::Server(Server& copy)
 {
-	struct sockaddr_in 			address;
-    
 	// Dup the socket fd of parameter into
 	// own socket fd.
 	// The rest is similar to normal construction.
-	this->socket = dup(copy.socket);
-	this->_default = copy.getDefaultInfos();
-	this->_infos = copy.getAllInfos();
-	this->size = this->_infos.size();
-/*	if (this->socket == -1)
+	this->_socket = dup(copy.getSocket());
+	this->_default = copy._default;
+	this->_infos = copy._infos;
+	this->_size = this->_infos.size();
+
+/*	struct sockaddr_in 			address;
+	
+	if (this->socket == -1)
 	{
 		std::cout << "Error in socket generation\n";
         	return ;
@@ -92,39 +94,58 @@ Server::~Server(void)
 	// Default destructor, closes the
 	// socket descriptor generated at
 	// construction.
-	close(this->socket);
+	close(this->_socket);
 }
 
 
 int	Server::getSocket(void)
 {
 	// Simple getter : socket descriptor
-	return (this->socket);
+	return (this->_socket);
 }
 
 void	Server::setSocket(int socket_descriptor)
 {
 	// Simple setter : socket descriptor
-	this->socket = socket_descriptor;
+	this->_socket = socket_descriptor;
 }
 
-int	Server::addNewInfo(ServerInfo& new_infos)
+void	Server::addNewInfo(ServerInfo& new_infos)
 {
 	// Adds a new ServerInfo into the current
 	// Server's vector (of infos),
 	// modifying vector size accordingly.
 	this->_infos.push_back(new_infos);
-	this->size++;
+	this->_size++;
 }
 
+/*
 ServerInfo	Server::getDefaultInfos(void)
 {
 	// Simple getter : default infos
 	return (this->_default);
 }
 
-ServerInfo	*Server::getAllInfos(void);
+std::vector<ServerInfo>	Server::getAllInfos(void)
 {
 	// Simple getter : vector of infos
-	return (this->this->_infos;
+	return (this->_infos);
+}
+*/
+
+std::ostream	&operator<<(std::ostream &x, Server serv)
+{
+	x << serv.getSocket() << std::endl;
+	serv.setSocket(15);
+	x << serv.getSocket() << std::endl;
+	x << serv._default << std::endl;
+	return (x);
+}
+
+int	main()
+{
+	ServerInfo	fofo;
+	Server		baba(fofo, 80);
+
+	std::cout << baba << std::endl;
 }

@@ -1,6 +1,4 @@
 
-
-#include "Server.hpp"
 #include "ServerInfo.hpp"
 
 ServerInfo::ServerInfo(void)
@@ -13,6 +11,36 @@ ServerInfo::ServerInfo(void)
 	this->client_body_buffer_size = 0; 	//Variable
 	this->autoindex = 0; 			//Variable
 }
+		///////////////////////
+		//
+		//	GETTERS		
+		//
+		///////////////////////
+
+std::string	ServerInfo::getIp(void)
+{
+	// Simple getter : IP
+	return (this->ip);
+}
+
+std::string	ServerInfo::getServerName(void)
+{
+	// Simple getter : ServName
+	return (this->server_name);
+}
+
+long		ServerInfo::getClientSize(void)
+{
+	// Simple getter : ClientSize
+	return (this->client_body_buffer_size);
+}
+
+
+		///////////////////////
+		//
+		//	SETTERS
+		//
+		///////////////////////
 
 void	ServerInfo::setIp(std::string ip)
 {
@@ -27,7 +55,7 @@ void	ServerInfo::setServerName(std::string name)
 	this->server_name = name;
 }
 
-void	ServerInfo::setLocation(std::string line)
+void	ServerInfo::setLocation(File arg)
 {
 	// Complicated, come back later
 	
@@ -39,10 +67,21 @@ void	ServerInfo::setLocation(std::string line)
 	// SET ROOT
 	// SET INDEX
 	// SET ALLOW (?)
+	
+	int	i = 0;
+//	int	location_bracket = 0;
+	std::vector<std::string>::iterator it = arg.content.begin();
+	while (it != arg.content.end())
+	{
+		if (arg.content[i].find("listen") != std::string::npos)
+			this->ip = arg.content[i].rfind(" "); //OK?
+		it++;
+		i++;
+	}
 	return ;
 }
 
-void	ServerInfo::setAllow(std::string line)
+void	ServerInfo::setAllow(File arg)
 {
 	// Complicated, come back later
 	
@@ -53,6 +92,7 @@ void	ServerInfo::setAllow(std::string line)
 	// 1 = allowed
 	
 	//Find() might be handy, and split tool too
+	(void)arg;
 	return ;
 }
 
@@ -66,4 +106,12 @@ void	ServerInfo::setAutoIndex(int x)
 {
 	// Simple setter : auto index
 	this->autoindex = x; 
+}
+
+std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
+{
+	x << inf.getIp() << std::endl;
+	x << inf.getServerName() << std::endl;
+	x << inf.getClientSize() << std::endl;
+	return (x);
 }

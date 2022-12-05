@@ -1,9 +1,22 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#pragma once
+
 #include <iostream>
 #include <vector>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <errno.h>
+
 #include "ServerInfo.hpp"
+#include "File.hpp"
+
+class ServerInfo;
 
 class Server {
 
@@ -14,19 +27,22 @@ class Server {
 
 		Server&	operator=(Server& copy);
 
-		int	getSocket();
-		void	setSocket(int socket_descriptor);
-		int	addNewinfo(ServerInfo& new_infos);
+		int			getSocket();
+//		ServerInfo		getDefaultInfos(void);
+//		std::vector<ServerInfo>	getAllInfos(void);
 
-		ServerInfo	getDefaultInfos(void);
-		ServerInfo	*getAllInfos(void);
+		void	addNewInfo(ServerInfo& new_infos);
+		void	setSocket(int socket_descriptor);
+
+		ServerInfo		*_default;	//what if ?
+	//	ServerInfo		_default;	//no more a pointer
+		std::vector<ServerInfo>	_infos;
 
 	private:
 		int			_socket;
 		int			_size;
-		ServerInfo	*_default;
-
-		std::vector<ServerInfo>	_infos;
 };
+
+std::ostream	&operator<<(std::ostream &x, Server serv);
 
 #endif
