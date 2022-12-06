@@ -6,6 +6,7 @@ ServerInfo::ServerInfo()
 	this->_allow[1] = 0;
 	this->_allow[2] = 0;
 	this->_allow[3] = 0;
+	this->_loc = NULL;
 }
 
 void	ServerInfo::setIp(std::string line)
@@ -45,6 +46,31 @@ void	ServerInfo::setAllow(std::string line)
 			this->_allow[2] = 1;
 }
 
+void	ServerInfo::setLoc(std::string uri, std::string root, std::string index, std::string allow)
+{
+	Location *tmp = new Location;
+	if (uri.find(" ") != std::string::npos)
+	{
+		tmp->uri = &uri[uri.find(" ") + 1];
+		tmp->uri[tmp->uri.find(" ")] = '\0';
+		tmp->uri[tmp->uri.find("{")] = '\0';
+	}
+	if (root.find(" ") != std::string::npos)
+		tmp->root = &root[root.find(" ") + 1];
+	if (index.find(" ") != std::string::npos)
+		tmp->index = &index[index.find(" ") + 1];
+	tmp->allow[0] = 0;
+	tmp->allow[1] = 0;
+	tmp->allow[2] = 0;
+	tmp->allow[3] = 0;
+	if (allow.find("GET") != std::string::npos)
+			tmp->allow[0] = 1;
+	if (allow.find("POST") != std::string::npos)
+			tmp->allow[1] = 1;
+	if (allow.find("DELETE") != std::string::npos)
+			tmp->allow[2] = 1;
+}
+
 std::string ServerInfo::getIp()
 {
 	return (this->_ip);
@@ -77,6 +103,23 @@ int	ServerInfo::getAllow(std::string allow)
 	return (-1);
 }
 
+int	ServerInfo::sizeLoc()
+{
+	int	i = 0;
+	Location	*tmp = this->_loc;
+	while(tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	return (i);
+}
+
+ServerInfo::~ServerInfo()
+{
+
+}
+
 int	main(void)
 {
 	ServerInfo si;
@@ -91,5 +134,11 @@ int	main(void)
 	std::cout << "Auto index : " << si.getAutoIndex() << std::endl;
 	si.setAllow("	allow_methods GET");
 	std::cout << "Allow : " << si.getAllow("GET") << ", " << si.getAllow("POST") << ", " << si.getAllow("DELETE") << std::endl;
+	si.setLoc("	location *.bla {", "		root YoupiBanane/", "		index youpi.bad_extension", "		allow_methods POST");
+	si.setLoc("	location *.bla {", "		root YoupiBanane/", "		index youpi.bad_extension", "		allow_methods POST");
+	std::cout << "Size loc : " << si.sizeLoc() << std::endl;
+	//size loc
+	//getloc
+	//getlocallow
 	return (0);
 }
