@@ -1,6 +1,6 @@
 #include "../includes/ServerInfo.hpp"
 
-ServerInfo::ServerInfo(void)
+ServerInfo::ServerInfo()
 {
 	this->_allow[0] = 0;
 	this->_allow[1] = 0;
@@ -17,20 +17,10 @@ void	ServerInfo::setIp(std::string line)
 			this->_ip = &line[line.find(" ")];
 }
 
-std::string ServerInfo::getIp()
-{
-	return (this->_ip);
-}
-
 void	ServerInfo::setName(std::string line)
 {
 	if (line.find(" ") != std::string::npos)
 		this->_name = &line[line.find(" ")];
-}
-
-std::string ServerInfo::getName()
-{
-	return(this->_name);
 }
 
 void	ServerInfo::setClientSize(std::string line)
@@ -39,19 +29,9 @@ void	ServerInfo::setClientSize(std::string line)
 		this->_clientSize = atoi(&line[line.find(" ")]);
 }
 
-long int	ServerInfo::getClientSize()
-{
-	return (this->_clientSize);
-}
-
 void	ServerInfo::setAutoIndex(int autoIndex)
 {
 	this->_autoIndex = autoIndex;
-}
-
-int	ServerInfo::getAutoIndex()
-{
-	return(this->_autoIndex);
 }
 
 void	ServerInfo::setAllow(std::string line)
@@ -63,6 +43,26 @@ void	ServerInfo::setAllow(std::string line)
 			this->_allow[1] = 1;
 	if (line.find("DELETE") != std::string::npos)
 			this->_allow[2] = 1;
+}
+
+std::string ServerInfo::getIp()
+{
+	return (this->_ip);
+}
+
+std::string ServerInfo::getName()
+{
+	return(this->_name);
+}
+
+long int	ServerInfo::getClientSize()
+{
+	return (this->_clientSize);
+}
+
+int	ServerInfo::getAutoIndex()
+{
+	return(this->_autoIndex);
 }
 
 int	ServerInfo::getAllow(std::string allow)

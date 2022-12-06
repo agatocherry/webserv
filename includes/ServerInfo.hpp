@@ -17,18 +17,18 @@ struct Location
 class ServerInfo 
 {
 	public:
-		ServerInfo(void);
-		// Ranger les set ensemble, et les get ensemble
+		ServerInfo();
 		void				setIp(std::string line);
-		std::string	getIp();
 		void				setName(std::string line);
-		std::string	getName();
 		void				setClientSize(std::string line);
-		long int		getClientSize();
 		void				setAutoIndex(int autoIndex);
-		int					getAutoIndex();
 		void				setAllow(std::string line);
+		std::string	getIp();
+		std::string	getName();
+		long int		getClientSize();
+		int					getAutoIndex();
 		int					getAllow(std::string allow);
+		~ServerInfo(){};
 	private:
 		std::string	_ip;
 		std::string	_name;
