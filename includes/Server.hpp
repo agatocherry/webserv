@@ -1,8 +1,7 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include <iostream>
-#include <vector>
+#include "webserv.hpp"
 #include "ServerInfo.hpp"
 
 class Server {
@@ -15,12 +14,18 @@ class Server {
 		Server&	operator=(Server& copy);
 
 		int	getSocket();
+		int	accept();
 		int	addNewinfo(ServerInfo& new_infos);
 
+		void	close();
+		int		parseRequest();
+		int		sendResponse();
+
 	private:
-		int			_socket;
-		int			_size;
-		ServerInfo	*_default;
+		int					_socket;
+		int					_size;
+		ServerInfo			*_default;
+		struct sockaddr_in	_addr;
 
 		std::vector<ServerInfo>	_infos;
 };

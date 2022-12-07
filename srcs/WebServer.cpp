@@ -55,6 +55,11 @@ int	WebServer::launch(void) {
 		while (pending == 0) {
 
 			memcpy(&readfds, &_sockets, sizeof(_sockets));
+			FD_ZERO(&_writefds);
+
+			for (std::map<int, Server>::iterator it = _writablefds.begin(); it != _writablefds.end(); it++) {
+				FD_SET(it->second.getSocket(), &writefds);
+			}
 
 			std::cout << "\rWaiting" << rot[i++] << std::flush;
 			if (i == 4)
@@ -64,6 +69,7 @@ int	WebServer::launch(void) {
 			if (pending < 0) {
 				std::cerr << "select() failed" << std::endl;
 				this->reset();
+				i = 0;
 			}
 		}
 
@@ -72,7 +78,7 @@ int	WebServer::launch(void) {
 
 			if (FD_ISSET(fd, &writefds)) {
 				std::map<int, Server>::iterator tmp;
-				it->second.send();
+				it->second.sendResponse();
 
 				tmp = it++;
 				_writablefds.erase(tmp);
@@ -86,7 +92,7 @@ int	WebServer::launch(void) {
 
 			if (FD_ISSET(fd, &readfds)) {
 				std::map<int, Server>::iterator tmp;
-				it->second.read();
+				it->second.parseRequest();
 
 				_writablefds.insert(it);
 				FD_CLR(fd, &_sockets);
@@ -111,14 +117,27 @@ int	WebServer::launch(void) {
 						_max_fd = new_socket;
 					
 					_acceptfds.insert(std::make_pair(it->first, new_fd));
-					_acceptfds[fd].setSocket(new_socket);
+					_acceptfds[it->first].setSocket(new_socket);
 					pending--;
 				}
-		}
+			}
 
+		}
+	}
+}
+
+void	WebServer::reset(void) {
+	for (std::map<int, Server>::iterator it = _acceptfds.begin(); it != _acceptfds.end(); it++)
+		it->second.close();
+	_acceptfds.clear();
+	_writablefds.clear();
+	FD_ZERO(&_sockets);
+	for (std::map<int, Server>::iterator it = _servers.begin(); it != _servers.end(); it++) {
+		FD_SET(it->second.getSocket(), &_sockets);
 	}
 }
 
 int	WebServer::clean(void) {
-
+	for (std::map<int, Server>::iterator it = _servers.begin(); it != _servers.end(); it++)
+		it->second.close();
 }
