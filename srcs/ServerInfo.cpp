@@ -110,8 +110,10 @@ void	ServerInfo::setAutoIndex(int x)
 
 std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
 {
-	x << inf.getIp() << std::endl;
-	x << inf.getServerName() << std::endl;
-	x << inf.getClientSize() << std::endl;
+	x << inf.getIp();
+	std::cout << " | ";
+	x << inf.getServerName();
+	std::cout << " | ";
+	x << inf.getClientSize();
 	return (x);
 }

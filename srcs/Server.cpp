@@ -12,14 +12,17 @@ Server::Server(ServerInfo infos, int port)
 	// TYPE		= Non-blocking socket descriptor
 	// 		  (prevent usage of fcntl()
 	// PROTOCOL	= Default (unspecified)
-	port = 80;
+//	port = 80;
 	if ((this->_socket = socket(AF_INET, SOCK_STREAM, 0)) == 0)
 	{
-		std::cout << "Error in socket generation\n";
+		perror("Error socket");
         	return ;
     	}
         address.sin_family = AF_INET;
-    	address.sin_addr.s_addr = SOCK_NONBLOCK;
+   // 	address.sin_addr.s_addr = SO_REUSEADDR;
+    //	address.sin_addr.s_addr = SOCK_STREAM;
+	address.sin_addr.s_addr = htonl(INADDR_ANY);
+   // 	address.sin_addr.s_addr = SOCK_NONBLOCK;
     	address.sin_port = htons(port); //PORT = 80, always
 	memset(address.sin_zero, '\0', sizeof address.sin_zero);
 	////////////////////////////////////
@@ -30,15 +33,14 @@ Server::Server(ServerInfo infos, int port)
 	// Start listening on the socket
 	if (bind(this->_socket, (struct sockaddr *)&address, sizeof(address)) < 0)
 	{
-		std::cout << "Error in binding\n";
-		perror("Error");
+		perror("Error bind");
         	return ;
 	}
 	if (listen(this->_socket, 10) < 0)
 	{
 		//Max nb of queuing requests = 10,
 		//too low to survive siege (come back later)
-		std::cout << "Error in listening\n";
+		perror("Error listen");
         	return ;
 	}
 	////////////////////////////////////
@@ -135,17 +137,22 @@ std::vector<ServerInfo>	Server::getAllInfos(void)
 
 std::ostream	&operator<<(std::ostream &x, Server serv)
 {
-	x << serv.getSocket() << std::endl;
+	x << serv.getSocket();
+	std::cout << " | ";
 	serv.setSocket(15);
-	x << serv.getSocket() << std::endl;
-	x << serv._default << std::endl;
+	x << serv.getSocket();
+	std::cout << " | ";
+	x << serv._default;
 	return (x);
 }
 
 int	main()
 {
 	ServerInfo	fofo;
-	Server		baba(fofo, 80);
+	Server		baba(fofo, 8080);
 
+	std::cout << "---FOFO = ";
+	std::cout << fofo << std::endl;
+	std::cout << "---BABA = ";
 	std::cout << baba << std::endl;
 }
