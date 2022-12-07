@@ -14,7 +14,7 @@ NAME = webserv
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 INCLUDES = -I ./includes/
-SRCS = srcs/File.cpp
+SRCS = srcs/ServerInfo.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
