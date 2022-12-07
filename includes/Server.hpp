@@ -27,6 +27,7 @@ class Server {
 
 		Server&	operator=(Server& copy);
 
+		int	accept();
 		int			getSocket();
 //		ServerInfo		getDefaultInfos(void);
 //		std::vector<ServerInfo>	getAllInfos(void);
@@ -38,7 +39,14 @@ class Server {
 	//	ServerInfo		_default;	//no more a pointer
 		std::vector<ServerInfo>	_infos;
 
+		void	close();
+		int		parseRequest();
+		int		sendResponse();
+
 	private:
+		ServerInfo			*_default;
+		struct sockaddr_in	_addr;
+		std::vector<ServerInfo>	_infos;
 		int			_socket;
 		int			_size;
 };
