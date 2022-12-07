@@ -5,7 +5,6 @@ ServerInfo::ServerInfo()
 	this->_allow[0] = 0;
 	this->_allow[1] = 0;
 	this->_allow[2] = 0;
-	this->_allow[3] = 0;
 	this->_loc = NULL;
 }
 
@@ -48,27 +47,36 @@ void	ServerInfo::setAllow(std::string line)
 
 void	ServerInfo::setLoc(std::string uri, std::string root, std::string index, std::string allow)
 {
-	Location *tmp = new Location;
+	Location *newNode = new Location;
 	if (uri.find(" ") != std::string::npos)
 	{
-		tmp->uri = &uri[uri.find(" ") + 1];
-		tmp->uri[tmp->uri.find(" ")] = '\0';
-		tmp->uri[tmp->uri.find("{")] = '\0';
+		newNode->uri = &uri[uri.find(" ") + 1];
+		newNode->uri[newNode->uri.find(" ")] = '\0';
+		newNode->uri[newNode->uri.find("{")] = '\0';
 	}
 	if (root.find(" ") != std::string::npos)
-		tmp->root = &root[root.find(" ") + 1];
+		newNode->root = &root[root.find(" ") + 1];
 	if (index.find(" ") != std::string::npos)
-		tmp->index = &index[index.find(" ") + 1];
-	tmp->allow[0] = 0;
-	tmp->allow[1] = 0;
-	tmp->allow[2] = 0;
-	tmp->allow[3] = 0;
+		newNode->index = &index[index.find(" ") + 1];
+	newNode->allow[0] = 0;
+	newNode->allow[1] = 0;
+	newNode->allow[2] = 0;
 	if (allow.find("GET") != std::string::npos)
-			tmp->allow[0] = 1;
+			newNode->allow[0] = 1;
 	if (allow.find("POST") != std::string::npos)
-			tmp->allow[1] = 1;
+			newNode->allow[1] = 1;
 	if (allow.find("DELETE") != std::string::npos)
-			tmp->allow[2] = 1;
+			newNode->allow[2] = 1;
+	newNode->next = NULL;
+	if(this->_loc == NULL)
+		this->_loc = newNode;
+	else
+	{
+		Location *tmp = this->_loc;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = newNode;
+	}
 }
 
 std::string ServerInfo::getIp()
@@ -117,7 +125,12 @@ int	ServerInfo::sizeLoc()
 
 ServerInfo::~ServerInfo()
 {
-
+	while(this->_loc)
+	{
+		Location *tmp = this->_loc;
+		this->_loc = this->_loc->next;
+		delete(tmp);
+	}
 }
 
 int	main(void)
@@ -135,9 +148,9 @@ int	main(void)
 	si.setAllow("	allow_methods GET");
 	std::cout << "Allow : " << si.getAllow("GET") << ", " << si.getAllow("POST") << ", " << si.getAllow("DELETE") << std::endl;
 	si.setLoc("	location *.bla {", "		root YoupiBanane/", "		index youpi.bad_extension", "		allow_methods POST");
-	si.setLoc("	location *.bla {", "		root YoupiBanane/", "		index youpi.bad_extension", "		allow_methods POST");
+	si.setLoc("	location *.here {", "		root Yo/", "		index youpi.html", "		allow_methods DELETE");
+	si.setLoc("	location *.c {", "		root Prout/", "		index youpi.bad", "		allow_methods GET");
 	std::cout << "Size loc : " << si.sizeLoc() << std::endl;
-	//size loc
 	//getloc
 	//getlocallow
 	return (0);
