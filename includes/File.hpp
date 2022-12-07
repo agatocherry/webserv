@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <iostream>
@@ -17,6 +18,7 @@ class File {
 		//line is how much line you want, let 1 by default
 		//if the return is empty, there are no much line
 		~File(){};
+
 //	private:			
 // Makes the whole object useless because
 // imposible to use, must be public.

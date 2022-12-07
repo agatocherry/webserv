@@ -14,9 +14,11 @@ NAME = webserv
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 INCLUDES = -I ./includes/
+
 SRCS = srcs/Server.cpp \
        srcs/ServerInfo.cpp \
-       srcs/File.cpp 
+       srcs/File.cpp \
+       main
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
@@ -39,3 +41,7 @@ pouette: $(OBJS)
 	@ $(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(NAME)
 
 .PHONY: all clean fclean re bonus
+
+test: all
+	@ valgrind ./webserv config/default.conf
+
