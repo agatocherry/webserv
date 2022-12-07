@@ -1,3 +1,33 @@
+
+#include "ServerInfo.hpp"
+
+ServerInfo::ServerInfo(void)
+{
+	// Default constructor
+	// Arbitrary values set,
+	//					come back later
+	this->ip = "0.0.0.80";			//Variable
+	this->server_name = "localhost";	//Variable
+	this->client_body_buffer_size = 0; 	//Variable
+	this->autoindex = 0; 			//Variable
+}
+
+
+		///////////////////////
+		//
+		//	SETTERS
+		//
+		///////////////////////
+
+
+std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
+{
+	x << inf.getIp();
+	std::cout << " | ";
+	x << inf.getServerName();
+	std::cout << " | ";
+	x << inf.getClientSize();
+	return (x);
 #include "../includes/ServerInfo.hpp"
 
 ServerInfo::ServerInfo()
