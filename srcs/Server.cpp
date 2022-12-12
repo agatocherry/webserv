@@ -1,9 +1,14 @@
 #include "Server.hpp"
+#include "WebServer.hpp"
+#include "ServerInfo.hpp"
+
+#include "../includes/WebServer.hpp"
 #include "../includes/Server.hpp"
+#include "../includes/ServerInfo.hpp"
 
 Server::Server(ServerInfo infos, int port)
 {
-	struct sockaddr_in 		address;
+//	struct sockaddr_in 		address;
     
 	// Generating socket file descriptor
 	// DOMAIN	= Ipv4 Internet protocol
@@ -16,20 +21,20 @@ Server::Server(ServerInfo infos, int port)
 		perror("Error socket");
         	return ;
     	}
-        address.sin_family = AF_INET;
+        this->_addr.sin_family = AF_INET;
+	this->_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    	this->_addr.sin_port = htons(port); //PORT = 80, always
    // 	address.sin_addr.s_addr = SO_REUSEADDR;
     //	address.sin_addr.s_addr = SOCK_STREAM;
-	address.sin_addr.s_addr = htonl(INADDR_ANY);
    // 	address.sin_addr.s_addr = SOCK_NONBLOCK;
-    	address.sin_port = htons(port); //PORT = 80, always
-	memset(address.sin_zero, '\0', sizeof address.sin_zero);
+	memset(this->_addr.sin_zero, '\0', sizeof(this->_addr.sin_zero));
 	////////////////////////////////////
         
 	// Binding the socket to the
 	// socket-address struct parameters
 	// +
 	// Start listening on the socket
-	if (bind(this->_socket, (struct sockaddr *)&address, sizeof(address)) < 0)
+	if (bind(this->_socket, (struct sockaddr *)&(this->_addr), sizeof(this->_addr)) < 0)
 	{
 		perror("Error bind");
         	return ;
@@ -144,27 +149,18 @@ std::ostream	&operator<<(std::ostream &x, Server serv)
 	return (x);
 }
 
-int	main()
-{
-	ServerInfo	fofo;
-	Server		baba(fofo, 8080);
-
-	std::cout << "---FOFO = ";
-	std::cout << fofo << std::endl;
-	std::cout << "---BABA = ";
-	std::cout << baba << std::endl;
-}
 
 int	Server::accept() {
 	int	new_socket;
 
-	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(sizeof(_addr)));
+	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(_addr));
+//	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(sizeof(_addr)));
 	if (new_socket == -1)
 		std::cerr << "Problem with accept()" << std::endl;
 	return new_socket;
 }
 
-void	Server::close() {
+void	Server::close_socket() {
 	if (_socket > 0)
 		::close(_socket);
 }
@@ -174,11 +170,12 @@ int	Server::parseRequest() {
 	char	buffer[30000] = {0};
 
 	ret = read(_socket, buffer, 30000);
-	printf("From: %ld\n", ntohl(_addr.sin_addr.s_addr));
+	printf("From: %u\n", ntohl(_addr.sin_addr.s_addr));
 	printf("%s\n", buffer);
 	return 0;
 }
 
 int	Server::sendResponse() {
 	write(_socket, "Message Received", 16);
+	return (0); //forgot return, temporary return 0
 }

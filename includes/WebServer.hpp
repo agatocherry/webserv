@@ -6,6 +6,8 @@
 #include "Server.hpp"
 #include "ConfigInfo.hpp"
 
+class Server;
+
 class WebServer {
 
 	public:

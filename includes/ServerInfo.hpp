@@ -5,7 +5,10 @@
 #pragma once
 
 #include <unistd.h>
-#include "webserver.hpp"
+#include <stdlib.h>
+
+#include "WebServer.hpp"
+#include "webserv.hpp"
 #include "Server.hpp"
 #include "File.hpp"
 
@@ -28,33 +31,35 @@ class ServerInfo
 
 		// Getters
 		std::string	getIp(void);
+		int		getAllow(std::string allow);
 		std::string	getServerName(void);
 		long		getClientSize(void);
+		int		getAutoIndex(void);
 		// Setters
 		void	setServerName(std::string name);
 		void	setClientSize(long x);
-		void	setAutoIndex(int x);
 
 
 	//	std::vector<Location>		_loc;
 		int				allow[3];
 		int				nb_location;
 
-		ServerInfo();
 		void				setIp(std::string line);
 		void				setAutoIndex(int autoIndex);
 		void				setAllow(std::string line);
 		void				setLoc(std::string uri, std::string root, std::string index, std::string allow);
+		void				setClientSize(std::string line);
 		int					sizeLoc();
-		~ServerInfo();
+		~ServerInfo(void);
     
-    int					_allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
-    Location		*_loc;
+	    int					_allow[3]; // GET POST DELETE :
+							   // 0 si interdit, 1 si autorise
+	    Location				*_loc;
 	private:
-		std::string	_ip;
-		std::string	_name;
-		long				_clientSize;
-		int					_autoIndex; //0 si off, 1 si on
+	    std::string				_ip;
+	    std::string				_server_name;
+	    long				_clientSize;
+	    int					_autoIndex; //0 si off, 1 si on
 		
 };
 

@@ -1,24 +1,23 @@
 
 #include "ServerInfo.hpp"
+#include "../includes/ServerInfo.hpp"
 
 ServerInfo::ServerInfo(void)
 {
 	// Default constructor
 	// Arbitrary values set,
 	//					come back later
-	this->ip = "0.0.0.80";			//Variable
-	this->server_name = "localhost";	//Variable
-	this->client_body_buffer_size = 0; 	//Variable
-	this->autoindex = 0; 			//Variable
+	this->_ip = "0.0.0.80";			//Variable
+	this->_server_name = "localhost";	//Variable
+	this->_clientSize = 0; 			//Variable
+	this->_autoIndex = 0; 			//Variable
 }
-
 
 		///////////////////////
 		//
 		//	SETTERS
 		//
 		///////////////////////
-
 
 std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
 {
@@ -28,14 +27,6 @@ std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
 	std::cout << " | ";
 	x << inf.getClientSize();
 	return (x);
-#include "../includes/ServerInfo.hpp"
-
-ServerInfo::ServerInfo()
-{
-	this->_allow[0] = 0;
-	this->_allow[1] = 0;
-	this->_allow[2] = 0;
-	this->_loc = NULL;
 }
 
 void	ServerInfo::setIp(std::string line)
@@ -47,10 +38,11 @@ void	ServerInfo::setIp(std::string line)
 			this->_ip = &line[line.find(" ")];
 }
 
-void	ServerInfo::setName(std::string line)
+//void	ServerInfo::setName(std::string line)
+void	ServerInfo::setServerName(std::string line)
 {
 	if (line.find(" ") != std::string::npos)
-		this->_name = &line[line.find(" ")];
+		this->_server_name = &line[line.find(" ")];
 }
 
 void	ServerInfo::setClientSize(std::string line)
@@ -109,14 +101,19 @@ void	ServerInfo::setLoc(std::string uri, std::string root, std::string index, st
 	}
 }
 
+		/////////////////////////
+		//	GETTER		/
+		////////////////////////	
+
+
 std::string ServerInfo::getIp()
 {
 	return (this->_ip);
 }
 
-std::string ServerInfo::getName()
+std::string ServerInfo::getServerName()
 {
-	return(this->_name);
+	return(this->_server_name);
 }
 
 long int	ServerInfo::getClientSize()
@@ -153,6 +150,7 @@ int	ServerInfo::sizeLoc()
 	return (i);
 }
 
+
 ServerInfo::~ServerInfo()
 {
 	while(this->_loc)
@@ -163,25 +161,4 @@ ServerInfo::~ServerInfo()
 	}
 }
 
-int	main(void)
-{
-	ServerInfo si;
-	
-	si.setIp("	listen www.localhost");
-	std::cout << "Ip : " << si.getIp() << std::endl;
-	si.setName("	server_name YoupiBanane");
-	std::cout << "Name : " << si.getName() << std::endl;
-	si.setClientSize("	client_body_buffer_size 100");
-	std::cout << "Client size : " << si.getClientSize() << std::endl;
-	si.setAutoIndex(0);
-	std::cout << "Auto index : " << si.getAutoIndex() << std::endl;
-	si.setAllow("	allow_methods GET");
-	std::cout << "Allow : " << si.getAllow("GET") << ", " << si.getAllow("POST") << ", " << si.getAllow("DELETE") << std::endl;
-	si.setLoc("	location *.bla {", "		root YoupiBanane/", "		index youpi.bad_extension", "		allow_methods POST");
-	si.setLoc("	location *.here {", "		root Yo/", "		index youpi.html", "		allow_methods DELETE");
-	si.setLoc("	location *.c {", "		root Prout/", "		index youpi.bad", "		allow_methods GET");
-	std::cout << "Size loc : " << si.sizeLoc() << std::endl;
-	//getloc
-	//getlocallow
-	return (0);
-}
+

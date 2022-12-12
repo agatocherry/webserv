@@ -1,11 +1,15 @@
 #ifndef CONFIGINFO_HPP
 #define CONFIGINFO_HPP
 
+#pragma once
+
 #include <iostream>
 #include <map>
 
 #include "Server.hpp"
 #include "ServerInfo.hpp"
+
+class Server;
 
 class ConfigInfo {
 

@@ -6,7 +6,7 @@
 #    By: shdorlin <shdorlin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 18:32:32 by shdorlin          #+#    #+#              #
-#    Updated: 2022/12/05 14:53:15 by kejebane         ###   ########.fr        #
+#    Updated: 2022/12/12 14:51:27 by kejebane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ INCLUDES = -I ./includes/
 SRCS = srcs/Server.cpp \
        srcs/ServerInfo.cpp \
        srcs/File.cpp \
-       main
+       srcs/main.cpp
+
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)

@@ -39,14 +39,12 @@ class Server {
 	//	ServerInfo		_default;	//no more a pointer
 		std::vector<ServerInfo>	_infos;
 
-		void	close();
+		void		close_socket(void);//close -> close_socket
 		int		parseRequest();
 		int		sendResponse();
 
 	private:
-		ServerInfo			*_default;
 		struct sockaddr_in	_addr;
-		std::vector<ServerInfo>	_infos;
 		int			_socket;
 		int			_size;
 };
