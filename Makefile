@@ -6,7 +6,7 @@
 #    By: shdorlin <shdorlin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 18:32:32 by shdorlin          #+#    #+#              #
-#    Updated: 2022/12/12 14:51:27 by kejebane         ###   ########.fr        #
+#    Updated: 2022/12/12 19:09:21 by kejebane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,17 @@ SRCS = srcs/Server.cpp \
        srcs/File.cpp \
        srcs/main.cpp
 
+CLIE = client.cpp
+
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ $(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(NAME)
+
+client:
+	@ $(CC) $(CFLAGS) $(INCLUDES) $(CLIE) -o client
 
 %.o: %.cpp
 	@ $(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
