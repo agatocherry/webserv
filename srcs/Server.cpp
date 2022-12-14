@@ -153,7 +153,7 @@ std::ostream	&operator<<(std::ostream &x, Server serv)
 int	Server::accept() {
 	int	new_socket;
 
-	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(_addr));
+	// new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(_addr));
 //	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(sizeof(_addr)));
 	if (new_socket == -1)
 		std::cerr << "Problem with accept()" << std::endl;
