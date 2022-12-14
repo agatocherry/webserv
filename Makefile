@@ -18,6 +18,7 @@ INCLUDES = -I ./includes/
 SRCS = srcs/Server.cpp \
        srcs/ServerInfo.cpp \
        srcs/File.cpp \
+       srcs/ConfigInfo.cpp \
        srcs/main.cpp
 
 CLIE = client.cpp
