@@ -1,3 +1,7 @@
+# Config IDE
+*.idea
+.idea
+
 # Prerequisites
 *.d
 
