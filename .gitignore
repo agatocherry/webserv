@@ -1,6 +1,7 @@
 # Config IDE
 *.idea
 .idea
+.vscode
 
 # Prerequisites
 *.d
