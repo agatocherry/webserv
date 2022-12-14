@@ -3,16 +3,7 @@
 
 #pragma once
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <iostream>
-#include <ostream>
-#include <vector>
-
-#include "WebServer.hpp"
-#include "webserv.hpp"
-#include "Server.hpp"
-#include "File.hpp"
+#include "Webserv.hpp"
 
 class	Server;
 

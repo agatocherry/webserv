@@ -1,6 +1,4 @@
-#include "../includes/WebServer.hpp"
-#include "../includes/Server.hpp"
-#include "../includes/ServerInfo.hpp"
+#include "../includes/Webserv.hpp"
 
 int	main()
 {

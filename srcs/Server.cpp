@@ -1,10 +1,4 @@
-#include "Server.hpp"
-#include "WebServer.hpp"
-#include "ServerInfo.hpp"
-
-#include "../includes/WebServer.hpp"
-#include "../includes/Server.hpp"
-#include "../includes/ServerInfo.hpp"
+#include "../includes/Webserv.hpp"
 
 Server::Server(ServerInfo infos, int port)
 {

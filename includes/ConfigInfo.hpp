@@ -3,10 +3,7 @@
 
 #pragma once
 
-#include "Server.hpp"
-#include "ServerInfo.hpp"
-#include <iostream>
-#include <map>
+#include "Webserv.hpp"
 
 class Server;
 

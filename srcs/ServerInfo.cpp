@@ -1,4 +1,4 @@
-#include "../includes/ServerInfo.hpp"
+#include "../includes/Webserv.hpp"
 
 ServerInfo::ServerInfo(void)
 {
