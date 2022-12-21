@@ -1,7 +1,6 @@
 #ifndef SERVERINFO_HPP
 #define SERVERINFO_HPP
 
-
 #pragma once
 
 #include <unistd.h>

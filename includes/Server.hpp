@@ -14,6 +14,7 @@
 #include <errno.h>
 
 #include "ServerInfo.hpp"
+#include "ClientRequest.hpp"
 #include "File.hpp"
 
 class ServerInfo;
@@ -39,13 +40,20 @@ class Server {
 	//	ServerInfo		_default;	//no more a pointer
 		std::vector<ServerInfo>	_infos;
 
-		void		close_socket(void);//close -> close_socket
+		void	close_socket(void);//close -> close_socket
+		void	parseChunked();
 		int		parseRequest();
 		int		sendResponse();
+		int		chunkedRequest();
+
+		ServerInfo	requestInfos();
 
 	private:
 		struct sockaddr_in	_addr;
+		std::string	_file_request;
+		std::string	_request;
 		int			_socket;
+		int			_status;
 		int			_size;
 };
 

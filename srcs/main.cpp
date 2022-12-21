@@ -24,6 +24,7 @@ int main(int argc, char **argv) {
 */
 int	main()
 {
+	std::cout << "hello";
 	ServerInfo	fofo;
 	Server		baba(fofo, 8080);
 

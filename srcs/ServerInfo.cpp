@@ -7,7 +7,7 @@ ServerInfo::ServerInfo(void)
 	// Default constructor
 	// Arbitrary values set,
 	//					come back later
-	this->_ip = "0.0.0.80";			//Variable
+	this->_ip = "0.0.0.0";			//Variable
 	this->_server_name = "localhost";	//Variable
 	this->_clientSize = 0; 			//Variable
 	this->_autoIndex = 0; 			//Variable
