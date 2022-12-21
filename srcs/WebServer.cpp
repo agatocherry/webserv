@@ -92,13 +92,16 @@ int	WebServer::launch(void) {
 
 			if (FD_ISSET(fd, &readfds)) {
 				std::map<int, Server>::iterator tmp;
-				it->second.parseRequest();
+				ret = it->second.parseRequest();
 
-				_writablefds.insert(it);
-				FD_CLR(fd, &_sockets);
-				FD_CLR(fd, &readfds);
-				tmp = it++;
-				_acceptfds.erase(tmp);
+				if (ret <= 0) {
+					if (!ret)
+						_writablefds.insert(it);
+					FD_CLR(fd, &_sockets);
+					FD_CLR(fd, &readfds);
+					tmp = it++;
+					_acceptfds.erase(tmp);
+				}
 				pending--;
 			}
 		}
@@ -107,7 +110,7 @@ int	WebServer::launch(void) {
 			int	fd = it->second.getSocket();
 
 			if (FD_ISSET(fd, &readfds)) {
-				 int	new_socket = it->second.accept();
+				int	new_socket = it->second.accept();
 				 
 				if (new_socket > 0) {
 				 	Server	new_fd(it->second);

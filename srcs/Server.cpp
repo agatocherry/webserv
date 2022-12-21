@@ -47,6 +47,7 @@ Server::Server(ServerInfo infos, int port)
 	////////////////////////////////////
 	this->_infos.push_back(infos);
 	this->_size = this->_infos.size();
+	this->_status = 200;
 }
 
 
@@ -146,9 +147,10 @@ std::ostream	&operator<<(std::ostream &x, Server serv)
 
 int	Server::accept() {
 	int	new_socket;
+	int	size = sizeof(_addr);
 
-	// new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(_addr));
-//	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(sizeof(_addr)));
+	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(size));
+
 	if (new_socket == -1)
 		std::cerr << "Problem with accept()" << std::endl;
 	return new_socket;
@@ -160,16 +162,67 @@ void	Server::close_socket() {
 }
 
 int	Server::parseRequest() {
-	int	ret;
+	int		ret;
 	char	buffer[30000] = {0};
 
-	ret = read(_socket, buffer, 30000);
-	printf("From: %u\n", ntohl(_addr.sin_addr.s_addr));
-	printf("%s\n", buffer);
+	ret = read(_socket, buffer, 30000 - 1);
+
+	if (ret <= 0) {
+		this->close_socket();
+		std::cerr << "Error : Could not read from the socket.\n" << std::endl;
+		return -1;
+	}
+
+	_request += std::string(buffer);
+	if (_request.find("Transfer-Encoding: chunked") != std::string::npos) {
+		if (this->chunkedRequest())
+			return 1;
+		else
+			parseChunked();
+	}
+
+	ServerInfo	clientInfo = requestInfos();
+	ClientRequest	client(clientInfo, _request);
+
+	_file_request = client.getFile();
+	_status = client.getStatus();
+
 	return 0;
+}
+
+int	Server::chunkedRequest() {
+	if (_request.find("0\r\n\r\n") != std::string::npos)
+		return 0;
+	return 1;
+}
+
+void	Server::parseChunked() {
+	std::string		header;
+	std::string		received;
+	std::string		body = "";
+	int				size = 0;
+	int				i;
+
+	header = _request.substr(0, _request.find("\r\n\r\n") + 4);
+	received = _request.substr(_request.find("\r\n\r\n") + 4);
+
+	while (received.size()) {
+		i = _received.find("\r\n") + 2;
+		size = stoi(_received.substr(0, i - 2), 0, 16);
+		body += received.substr(i, i + size);
+		received = received.substr(i + size + 2);
+	}
+
+	_request = header + body + "\r\n";
 }
 
 int	Server::sendResponse() {
 	write(_socket, "Message Received", 16);
 	return (0); //forgot return, temporary return 0
+}
+
+ServerInfo	Server::requestInfos() {
+	if (_infos.size() == 1)
+		return *(_infos.begin());
+	return *_default;
 }
