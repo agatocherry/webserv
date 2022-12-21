@@ -1,32 +1,22 @@
-
-#include "ServerInfo.hpp"
-#include "../includes/ServerInfo.hpp"
+#include "../includes/Webserv.hpp"
 
 ServerInfo::ServerInfo(void)
 {
-	// Default constructor
-	// Arbitrary values set,
-	//					come back later
-	this->_ip = "0.0.0.0";			//Variable
-	this->_server_name = "localhost";	//Variable
-	this->_clientSize = 0; 			//Variable
-	this->_autoIndex = 0; 			//Variable
+	// Default constructor arbitrary values set
+	this->_ip = "0.0.0.80";
+	this->_serverName = "localhost";
+	this->_clientSize = 0; 
+	this->_autoIndex = 0; 
+	this->_allow[0] = 0;
+	this->_allow[1] = 0;
+	this->_allow[2] = 0;
+	// this->_loc = NULL;
 }
 
-		///////////////////////
-		//
-		//	SETTERS
-		//
-		///////////////////////
-
-std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
+void	ServerInfo::setServerName(std::string line)
 {
-	x << inf.getIp();
-	std::cout << " | ";
-	x << inf.getServerName();
-	std::cout << " | ";
-	x << inf.getClientSize();
-	return (x);
+	if (line.find(" ") != std::string::npos)
+		this->_serverName = &line[line.find(" ") + 1];
 }
 
 void	ServerInfo::setIp(std::string line)
@@ -36,13 +26,6 @@ void	ServerInfo::setIp(std::string line)
 	else
 		if (line.find(" ") != std::string::npos)
 			this->_ip = &line[line.find(" ")];
-}
-
-//void	ServerInfo::setName(std::string line)
-void	ServerInfo::setServerName(std::string line)
-{
-	if (line.find(" ") != std::string::npos)
-		this->_server_name = &line[line.find(" ")];
 }
 
 void	ServerInfo::setClientSize(std::string line)
@@ -69,51 +52,37 @@ void	ServerInfo::setAllow(std::string line)
 
 void	ServerInfo::setLoc(std::string uri, std::string root, std::string index, std::string allow)
 {
-	Location *newNode = new Location;
+	Location tmp;
 	if (uri.find(" ") != std::string::npos)
 	{
-		newNode->uri = &uri[uri.find(" ") + 1];
-		newNode->uri[newNode->uri.find(" ")] = '\0';
-		newNode->uri[newNode->uri.find("{")] = '\0';
+		tmp.uri = &uri[uri.find(" ") + 1];
+		tmp.uri[tmp.uri.find(" ")] = '\0';
+		tmp.uri[tmp.uri.find("{")] = '\0';
 	}
 	if (root.find(" ") != std::string::npos)
-		newNode->root = &root[root.find(" ") + 1];
+		tmp.root = &root[root.find(" ") + 1];
 	if (index.find(" ") != std::string::npos)
-		newNode->index = &index[index.find(" ") + 1];
-	newNode->allow[0] = 0;
-	newNode->allow[1] = 0;
-	newNode->allow[2] = 0;
+		tmp.index = &index[index.find(" ") + 1];
+	tmp.allow[0] = 0;
+	tmp.allow[1] = 0;
+	tmp.allow[2] = 0;
 	if (allow.find("GET") != std::string::npos)
-			newNode->allow[0] = 1;
+			tmp.allow[0] = 1;
 	if (allow.find("POST") != std::string::npos)
-			newNode->allow[1] = 1;
+			tmp.allow[1] = 1;
 	if (allow.find("DELETE") != std::string::npos)
-			newNode->allow[2] = 1;
-	newNode->next = NULL;
-	if(this->_loc == NULL)
-		this->_loc = newNode;
-	else
-	{
-		Location *tmp = this->_loc;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = newNode;
-	}
-}
-
-		/////////////////////////
-		//	GETTER		/
-		////////////////////////	
-
-
-std::string ServerInfo::getIp()
-{
-	return (this->_ip);
+			tmp.allow[2] = 1;
+	this->_loc.push_back(tmp);
 }
 
 std::string ServerInfo::getServerName()
 {
-	return(this->_server_name);
+	return(this->_serverName);
+}
+
+std::string ServerInfo::getIp()
+{
+	return (this->_ip);
 }
 
 long int	ServerInfo::getClientSize()
@@ -138,27 +107,62 @@ int	ServerInfo::getAllow(std::string allow)
 	return (-1);
 }
 
-int	ServerInfo::sizeLoc()
-{
-	int	i = 0;
-	Location	*tmp = this->_loc;
-	while(tmp)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	return (i);
-}
-
-
 ServerInfo::~ServerInfo()
 {
-	while(this->_loc)
-	{
-		Location *tmp = this->_loc;
-		this->_loc = this->_loc->next;
-		delete(tmp);
-	}
+	this->_loc.clear();
 }
 
+std::ostream	&operator<<(std::ostream &x, std::vector<Location> loc)
+{
+	int	i = 0;
+	while (i < loc.size())
+	{
+		Location	tmp = loc.at(i);
+		x << "Location at(" << i << ") : ";
+		x << tmp.uri << ", ";
+		x << tmp.root << ", ";
+		x << tmp.index;
+		if (tmp.allow[0] != 0)
+		{
+			x << ", ";
+			x << "GET ";
+		}
+		if (tmp.allow[1] != 0)
+		{
+			x << ", ";
+			x << "POST ";
+		}
+		if (tmp.allow[2] != 0)
+		{
+			x << ", ";
+			x << "DELETE ";
+		}
+		i++;
+	}
+	return (x);
+}
 
+std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
+{
+	x << "Serveur " << inf.getServerName() << " : ";
+	x << inf.getIp() << ", ";
+	x << inf.getClientSize() << ", ";
+	x << inf.getAutoIndex();
+	if (inf._allow[0] != 0)
+	{
+		x << ", ";
+		x << "GET ";
+	}
+	if (inf._allow[1] != 0)
+	{
+		x << ", ";
+		x << "POST ";
+	}
+	if (inf._allow[2] != 0)
+	{
+		x << ", ";
+		x << "DELETE ";
+	}
+	x << inf._loc;
+	return (x);
+}

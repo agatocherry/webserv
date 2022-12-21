@@ -3,13 +3,7 @@
 
 #pragma once
 
-#include <unistd.h>
-#include <stdlib.h>
-
-#include "WebServer.hpp"
-#include "webserv.hpp"
-#include "Server.hpp"
-#include "File.hpp"
+#include "Webserv.hpp"
 
 class	Server;
 
@@ -18,50 +12,35 @@ struct Location
 	std::string	uri; 
 	std::string	root;
 	std::string	index;
-	int					allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
-	Location		*next;
+	int	allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
 };
 
 class ServerInfo 
 {
 	public:
-
-		ServerInfo(void);
-
-		// Getters
-		std::string	getIp(void);
-		int		getAllow(std::string allow);
-		std::string	getServerName(void);
-		long		getClientSize(void);
-		int		getAutoIndex(void);
-		// Setters
+		int	_allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
+		std::vector<Location>	_loc;
+		ServerInfo();
 		void	setServerName(std::string name);
-		void	setClientSize(long x);
-
-
-	//	std::vector<Location>		_loc;
-		int				allow[3];
-		int				nb_location;
-
-		void				setIp(std::string line);
-		void				setAutoIndex(int autoIndex);
-		void				setAllow(std::string line);
-		void				setLoc(std::string uri, std::string root, std::string index, std::string allow);
-		void				setClientSize(std::string line);
-		int					sizeLoc();
-		~ServerInfo(void);
-    
-	    int					_allow[3]; // GET POST DELETE :
-							   // 0 si interdit, 1 si autorise
-	    Location				*_loc;
+		void	setIp(std::string line);
+		void	setClientSize(std::string line);
+		void	setAutoIndex(int autoIndex);
+		void	setAllow(std::string line);
+		void	setLoc(std::string uri, std::string root, std::string index, std::string allow);
+		std::string	getServerName();
+		std::string	getIp();
+		long	getClientSize();
+		int	getAutoIndex();
+		int	getAllow(std::string allow);
+		~ServerInfo();
 	private:
-	    std::string				_ip;
-	    std::string				_server_name;
-	    long				_clientSize;
-	    int					_autoIndex; //0 si off, 1 si on
-		
+		std::string	_ip;
+		std::string	_serverName;
+		long	_clientSize;
+		int	_autoIndex; //0 si off, 1 si on
 };
 
+std::ostream	&operator<<(std::ostream &x, std::vector<Location> _loc);
 std::ostream	&operator<<(std::ostream &x, ServerInfo inf);
 
 #endif

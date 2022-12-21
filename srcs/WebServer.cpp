@@ -1,4 +1,4 @@
-#include "../includes/WebServer.hpp"
+#include "../includes/Webserv.hpp"
 
 WebServer::WebServer(void) {
 	return ;

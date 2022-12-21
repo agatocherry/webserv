@@ -1,10 +1,4 @@
-#include "Server.hpp"
-#include "WebServer.hpp"
-#include "ServerInfo.hpp"
-
-#include "../includes/WebServer.hpp"
-#include "../includes/Server.hpp"
-#include "../includes/ServerInfo.hpp"
+#include "../includes/Webserv.hpp"
 
 Server::Server(ServerInfo infos, int port)
 {
@@ -156,6 +150,7 @@ int	Server::accept() {
 	int	size = sizeof(_addr);
 
 	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(size));
+
 	if (new_socket == -1)
 		std::cerr << "Problem with accept()" << std::endl;
 	return new_socket;
