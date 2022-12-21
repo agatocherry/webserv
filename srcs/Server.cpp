@@ -1,91 +1,61 @@
-#include "../includes/Webserv.hpp"
+#include "../includes/webserv.hpp"
 
 Server::Server(ServerInfo infos, int port)
 {
-//	struct sockaddr_in 		address;
-    
+
 	// Generating socket file descriptor
 	// DOMAIN	= Ipv4 Internet protocol
 	// TYPE		= Non-blocking socket descriptor
 	// 		  (prevent usage of fcntl()
 	// PROTOCOL	= Default (unspecified)
-//	port = 80;
+	// port = 80;
+	
 	if ((this->_socket = socket(AF_INET, SOCK_STREAM, 0)) == 0)
 	{
 		perror("Error socket");
-        	return ;
-    	}
-        this->_addr.sin_family = AF_INET;
+        return ;
+    }
+    
+	this->_addr.sin_family = AF_INET;
 	this->_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    	this->_addr.sin_port = htons(port); //PORT = 80, always
-   // 	address.sin_addr.s_addr = SO_REUSEADDR;
-    //	address.sin_addr.s_addr = SOCK_STREAM;
-   // 	address.sin_addr.s_addr = SOCK_NONBLOCK;
+    this->_addr.sin_port = htons(port); 
+	
+	// ioctl() a voir
+
 	memset(this->_addr.sin_zero, '\0', sizeof(this->_addr.sin_zero));
+	
 	////////////////////////////////////
         
 	// Binding the socket to the
 	// socket-address struct parameters
 	// +
 	// Start listening on the socket
+	
 	if (bind(this->_socket, (struct sockaddr *)&(this->_addr), sizeof(this->_addr)) < 0)
 	{
 		perror("Error bind");
-        	return ;
+        return ;
 	}
-	if (listen(this->_socket, 10) < 0)
+
+	if (listen(this->_socket, MAX_FD) < 0)
 	{
-		//Max nb of queuing requests = 10,
-		//too low to survive siege (come back later)
 		perror("Error listen");
-        	return ;
+        return ;
 	}
-	////////////////////////////////////
-	// Setting the Default ServerInfo
-	// data here, (come back later : DONE)
+	
 	this->_default = &infos;
-	////////////////////////////////////
 	this->_infos.push_back(infos);
 	this->_size = this->_infos.size();
 	this->_status = 200;
 }
 
 
-Server::Server(Server& copy)
+Server::Server(Server& copy, int new_socket)
 {
-	// Dup the socket fd of parameter into
-	// own socket fd.
-	// The rest is similar to normal construction.
-	this->_socket = dup(copy.getSocket());
+	this->_socket = new_socket;
 	this->_default = copy._default;
 	this->_infos = copy._infos;
 	this->_size = this->_infos.size();
-
-/*	struct sockaddr_in 			address;
-	
-	if (this->socket == -1)
-	{
-		std::cout << "Error in socket generation\n";
-        	return ;
-    	}
-        address.sin_family = AF_INET;
-    	address.sin_addr.s_addr = SOCK_NONBLOCK;
-    	address.sin_port = htons(port);
-	memset(address.sin_zero, '\0', sizeof address.sin_zero);
-	if (bind(this->socket, (struct sockaddr *)&address, sizeof(address))<0)
-	{
-		std::cout << "Error in binding\n";
-        	return ;
-	}
-	if (listen(this->socket, 10) < 0)
-	{
-		std::cout << "Error in listening\n";
-        	return ;
-	}
-	this->_infos = copy.getAllInfos;	//Using getters now
-	this->_default = copy.getDefaultInfos;	//IMPOSSIBLE
-	this->size = this->_infos.size();	//IMPOSSIBLE
-*/
 }
 
 
@@ -119,56 +89,33 @@ void	Server::addNewInfo(ServerInfo& new_infos)
 	this->_size++;
 }
 
-/*
-ServerInfo	Server::getDefaultInfos(void)
-{
-	// Simple getter : default infos
-	return (this->_default);
-}
 
-std::vector<ServerInfo>	Server::getAllInfos(void)
-{
-	// Simple getter : vector of infos
-	return (this->_infos);
-}
-*/
-
-std::ostream	&operator<<(std::ostream &x, Server serv)
-{
-	x << serv.getSocket();
-	std::cout << " | ";
-	serv.setSocket(15);
-	x << serv.getSocket();
-	std::cout << " | ";
-	x << serv._default;
-	return (x);
-}
-
-
-int	Server::accept() {
+int	Server::accept_fd() {
+	
 	int	new_socket;
 	int	size = sizeof(_addr);
 
-	new_socket = ::accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(size));
+	new_socket = accept(_socket, (struct sockaddr *)&_addr, (socklen_t *)&(size));
 
 	if (new_socket == -1)
-		std::cerr << "Problem with accept()" << std::endl;
+		std::cerr << "Error: accept()" << std::endl;
 	return new_socket;
 }
 
 void	Server::close_socket() {
 	if (_socket > 0)
-		::close(_socket);
+		close(_socket);
 }
 
 int	Server::parseRequest() {
 	int		ret;
-	char	buffer[30000] = {0};
+	char	buffer[REQUEST_SIZE] = {0};
 
-	ret = read(_socket, buffer, 30000 - 1);
+	ret = read(_socket, buffer, REQUEST_SIZE - 1);
 
 	if (ret <= 0) {
 		this->close_socket();
+		free(buffer);
 		std::cerr << "Error : Could not read from the socket.\n" << std::endl;
 		return -1;
 	}
@@ -216,13 +163,42 @@ void	Server::parseChunked() {
 	_request = header + body + "\r\n";
 }
 
-int	Server::sendResponse() {
-	write(_socket, "Message Received", 16);
-	return (0); //forgot return, temporary return 0
+int	Server::sendResponse(std::map<int, std::string> errors) {
+	
+	HttpResponse	response(_file_request, _status, requestInfos().getAutoIndex(), errors);
+	std::string		message = response.getResponse();
+	int	ret;
+
+	ret = write(_socket, message, message.size());
+	if (ret < 0) {
+		// Verifier si 0 succes ou erreur
+		// Gestion d'erreur
+	}
+
+	this->close_socket();
+	_request.erase();
+	_file_request.erase();
+
+	return (0);
 }
 
 ServerInfo	Server::requestInfos() {
 	if (_infos.size() == 1)
 		return *(_infos.begin());
+
+	// determiner par server_name
+
+
 	return *_default;
+}
+
+std::ostream	&operator<<(std::ostream &x, Server serv)
+{
+	x << serv.getSocket();
+	std::cout << " | ";
+	serv.setSocket(15);
+	x << serv.getSocket();
+	std::cout << " | ";
+	x << serv._default;
+	return (x);
 }

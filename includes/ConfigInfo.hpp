@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Webserv.hpp"
+#include "webserv.hpp"
 
 class Server;
 
@@ -15,8 +15,12 @@ public:
     ConfigInfo&    operator=(ConfigInfo& copy);
     std::map<int, Server>    parse(char *filename);
     int    getMaxFd();
+
+    std::map<int, std::string>  getErrors();
+
 private:
-    std::map<int, Server>    _servers;
+    std::map<int, Server>      _servers;
+    std::map<int, std::string>  _error_files;
     int                        _maxFd;
     int                        _size;
 };

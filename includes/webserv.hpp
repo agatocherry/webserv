@@ -19,13 +19,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "ClientRequest.hpp"
-#include "ConfigInfo.hpp"
-#include "File.hpp"
-#include "HttpResponse.hpp"
-#include "Server.hpp"
-#include "ServerInfo.hpp"
-#include "WebServer.hpp"
+// #define METHOD 403
 
 #define BLANK "\033[0m"
 #define RED "\033[31m"
@@ -34,5 +28,17 @@
 #define BLUE "\033[34m"
 #define PURPLE "\033[35m"
 #define CYAN "\033[36m"
+
+#define MAX_FD 2048
+#define REQUEST_SIZE 30000
+
+struct Location
+{
+	std::string	uri; 
+	std::string	root;
+	std::string	index;
+	int	        allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
+};
+
 
 #endif

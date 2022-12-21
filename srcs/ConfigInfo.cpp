@@ -1,4 +1,4 @@
-#include "../includes/Webserv.hpp"
+#include "../includes/webserv.hpp"
 
 ConfigInfo::ConfigInfo(){
 }

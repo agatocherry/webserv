@@ -3,7 +3,10 @@
 
 #pragma once
 
-#include "Webserv.hpp"
+#include "webserv.hpp"
+#include "ServerInfo.hpp"
+#include "ClientRequest.hpp"
+#include "HttpResponse.hpp"
 
 class ServerInfo;
 
@@ -11,32 +14,35 @@ class Server {
 	
   public:
 		
-    Server(ServerInfo infos, int port = 80);
-		Server(Server& copy);
+    	Server(ServerInfo infos, int port = 80);
+		Server(Server& copy, int new_socket);
 		~Server(void);
-		Server&	operator=(Server& copy);
 		
-    int accept();
-		int getSocket();
+		Server&	operator=(Server& copy);
+
+		void	addNewInfo(ServerInfo& new_infos);
+		void	setSocket(int socket_descriptor);
+		
+    	int		accept_fd();
+		int		getSocket();
 		void	close_socket();
 		
-    int		parseRequest();
+    	int		parseRequest();
 		int		sendResponse();
 		int		chunkedRequest();
 		void	parseChunked();
 
 		ServerInfo	requestInfos();
 
-		void	addNewInfo(ServerInfo& new_infos);
-		void	setSocket(int socket_descriptor);
-		
-    ServerInfo		*_default;
+	    ServerInfo				*_default;
 		std::vector<ServerInfo>	_infos;
 	
   private:
+
 		struct sockaddr_in	_addr;
-		std::string	_file_request;
-		std::string	_request;
+		std::string			_file_request;
+		std::string			_request;
+		
 		int			_socket;
 		int			_status;
 		int			_size;

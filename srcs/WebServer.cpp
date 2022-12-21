@@ -1,33 +1,22 @@
-#include "../includes/Webserv.hpp"
+#include "../includes/webserv.hpp"
+
+// mettre une fonction globale qui renvoit un tableau d'erreurs
 
 WebServer::WebServer(void) {
 	return ;
-}
-
-WebServer::WebServer(WebServer& copy) {
-	*this = copy;
 }
 
 WebServer::~WebServer(void) {
 	return ;
 }
 
-WebServer&	WebServer::operator=(WebServer& copy) {
-	if (this != &copy) {
-		this->_config = copy._config;
-		this->_servers = copy._servers;
-		this->_sockets = copy._sockets;
-		this->_max_fd = copy._max_fd;
-	}
-	return *this;
-}
-
 int	WebServer::parsefile(char *filename) {
 	
 	_servers = _config.parse(filename);
+	// gestion d'erreur
+
 	_max_fd = _config.getMaxFd();
 
-	// Mettre toutes les sockets des servers dans _sockets
 	FD_ZERO(&_sockets);
 	for (std::map<int, Server>::iterator it = _servers.begin(); it != _servers.end(); it++) {
 		FD_SET(it->second.getSocket(), &_sockets);
@@ -78,7 +67,7 @@ int	WebServer::launch(void) {
 
 			if (FD_ISSET(fd, &writefds)) {
 				std::map<int, Server>::iterator tmp;
-				it->second.sendResponse();
+				it->second.sendResponse(getErrors());
 
 				tmp = it++;
 				_writablefds.erase(tmp);
@@ -110,17 +99,16 @@ int	WebServer::launch(void) {
 			int	fd = it->second.getSocket();
 
 			if (FD_ISSET(fd, &readfds)) {
-				int	new_socket = it->second.accept();
+				int	new_socket = it->second.accept_fd();
 				 
 				if (new_socket > 0) {
-				 	Server	new_fd(it->second);
+				 	Server	new_fd(it->second, new_socket);
 					
 					FD_SET(new_socket, &_sockets);
 					if (new_socket > _max_fd)
 						_max_fd = new_socket;
 					
 					_acceptfds.insert(std::make_pair(it->first, new_fd));
-					_acceptfds[it->first].setSocket(new_socket);
 					pending--;
 				}
 			}

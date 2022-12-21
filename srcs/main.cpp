@@ -1,8 +1,7 @@
-#include "../includes/Webserv.hpp"
+#include "../includes/webserv.hpp"
 
 int	main()
 {
-
 	ServerInfo	si;
 	Server		serv(si, 8080);
 
