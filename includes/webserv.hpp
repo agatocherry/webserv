@@ -1,6 +1,7 @@
 #ifndef WEBSERV_HPP
 #define WEBSERV_HPP
 
+
 #include <iostream>
 #include <ostream>
 #include <fstream>
@@ -19,6 +20,23 @@
 #include <stdlib.h>
 #include <errno.h>
 
+struct Location
+{
+	std::string	uri; 
+	std::string	root;
+	std::string	index;
+	int	        allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
+};
+#include "AutoIndex.hpp"
+#include "CGI.hpp"
+#include "ClientRequest.hpp"
+#include "ConfigInfo.hpp"
+#include "File.hpp"
+#include "Server.hpp"
+#include "ServerInfo.hpp"
+#include "WebServer.hpp"
+// #include "HttpResponse.hpp"
+
 // #define METHOD 403
 
 #define BLANK "\033[0m"
@@ -32,13 +50,6 @@
 #define MAX_FD 2048
 #define REQUEST_SIZE 30000
 
-struct Location
-{
-	std::string	uri; 
-	std::string	root;
-	std::string	index;
-	int	        allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
-};
 
 
 #endif

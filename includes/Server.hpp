@@ -4,9 +4,6 @@
 #pragma once
 
 #include "webserv.hpp"
-#include "ServerInfo.hpp"
-#include "ClientRequest.hpp"
-#include "HttpResponse.hpp"
 
 class ServerInfo;
 
@@ -34,7 +31,7 @@ class Server {
 
 		ServerInfo	requestInfos();
 
-	    ServerInfo				*_default;
+	  ServerInfo				*_default;
 		std::vector<ServerInfo>	_infos;
 	
   private:

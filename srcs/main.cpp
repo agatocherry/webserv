@@ -1,14 +1,21 @@
 #include "../includes/webserv.hpp"
 
-int	main()
+int main()
 {
-	ServerInfo	si;
-	Server		serv(si, 8080);
-
-	std::cout << "Si [" << si << "]" << std::endl;
-	std::cout << "Serv [" << serv << "]" << std::endl;
+	ConfigInfo config;
+	// std::cout << "Config [" << config << "]" << std::endl;
 	return 0;
 }
+
+// int	main()
+// {
+// 	ServerInfo	si();
+//	Server		serv(si, 8080);
+
+// 	std::cout << "Si [" << si << "]" << std::endl;
+// 	std::cout << "Serv [" << serv << "]" << std::endl;
+// 	return 0;
+// }
 
 // int main(int argc, char **argv)
 // {

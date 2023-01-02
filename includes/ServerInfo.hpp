@@ -6,35 +6,27 @@
 #include "webserv.hpp"
 
 class ServerInfo {
-	
 	public:
-		
+		std::vector<Location>	_loc;
+		int	_allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
 		ServerInfo();
-		~ServerInfo();
-		
 		void	setServerName(std::string name);
 		void	setIp(std::string line);
 		void	setClientSize(std::string line);
 		void	setAutoIndex(int autoIndex);
 		void	setAllow(std::string line);
 		void	setLoc(std::string uri, std::string root, std::string index, std::string allow);
-		
 		std::string	getServerName();
 		std::string	getIp();
-		long		getClientSize();
-		int			getAutoIndex();
-		int			getAllow(std::string allow);
-		
-		std::vector<Location>		_loc;
-	
+		long	getClientSize();
+		int	getAutoIndex();
+		int	getAllow(std::string allow);
+		~ServerInfo();
 	private:
-		
 		std::string	_ip;
 		std::string	_serverName;
-		
-		long		_clientSize;
-		int			_allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
-		int			_autoIndex; //0 si off, 1 si on
+		long	_clientSize;
+		int	_autoIndex; //0 si off, 1 si on
 };
 
 std::ostream	&operator<<(std::ostream &x, std::vector<Location> _loc);
