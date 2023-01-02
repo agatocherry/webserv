@@ -14,6 +14,7 @@ class ConfigInfo {
 		~ConfigInfo(void);
 		ConfigInfo&	operator=(ConfigInfo& copy);
 		std::map<int, Server>	parse(char *filename);
+		void	setErrorFiles();
 		void	setSize(int size);
 		std::string getError();
 		int	getSize();
@@ -21,8 +22,8 @@ class ConfigInfo {
 		std::map<int, std::string>	getErrors();
 	private:
 		std::string	_error;
+		std::map<int, std::string>	_errorFiles;
 		std::map<int, Server>	_servers;
-		std::map<int, std::string>	_error_files;
 		int	_maxFd;
 		int	_size;
 };
