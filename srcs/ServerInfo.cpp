@@ -144,7 +144,7 @@ std::ostream	&operator<<(std::ostream &x, std::vector<Location> loc)
 
 std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
 {
-	x << "Serveur " << inf.getServerName() << " : ";
+	x << "**** ServerInfo ****" << std::endl;
 	x << inf.getIp() << ", ";
 	x << inf.getClientSize() << ", ";
 	x << inf.getAutoIndex();

@@ -25,4 +25,6 @@ class ConfigInfo {
 		int	_size;
 };
 
+std::ostream	&operator<<(std::ostream &x, ConfigInfo inf);
+
 #endif

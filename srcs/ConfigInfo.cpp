@@ -2,9 +2,12 @@
 
 ConfigInfo::ConfigInfo(){
 	this->setSize(0);
+	this->_maxFd = 0;
 }
 
 ConfigInfo::ConfigInfo(ConfigInfo& copy){
+	this->_maxFd = 0;
+	this->setSize(0);
 }
 
 //ConfigInfo& ConfigInfo::operator=(ConfigInfo& copy){
@@ -26,4 +29,12 @@ int ConfigInfo::getMaxFd(){
 }
 
 ConfigInfo::~ConfigInfo(){
+}
+
+std::ostream	&operator<<(std::ostream &x, ConfigInfo inf)
+{
+	x << "**** ConfigInfo ****" << std::endl;
+	x << "Size : " << inf.getSize() << std::endl;
+	x << "MaxFd : " << inf.getMaxFd() << std::endl;
+	return (x);
 }

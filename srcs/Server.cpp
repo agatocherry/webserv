@@ -194,6 +194,7 @@ ServerInfo	Server::requestInfos() {
 
 std::ostream	&operator<<(std::ostream &x, Server serv)
 {
+	x << "**** Server ****" << std::endl;
 	// x << serv.getSocket();
 	std::cout << " | ";
 	serv.setSocket(15);

@@ -1,7 +1,6 @@
 #ifndef WEBSERV_HPP
 #define WEBSERV_HPP
 
-
 #include <iostream>
 #include <ostream>
 #include <fstream>
@@ -27,6 +26,7 @@ struct Location
 	std::string	index;
 	int	        allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
 };
+
 #include "AutoIndex.hpp"
 #include "CGI.hpp"
 #include "ClientRequest.hpp"

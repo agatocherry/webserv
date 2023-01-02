@@ -3,17 +3,17 @@
 int main()
 {
 	ConfigInfo config;
-	// std::cout << "Config [" << config << "]" << std::endl;
+	std::cout << config;
 	return 0;
 }
 
 // int	main()
 // {
-// 	ServerInfo	si();
-//	Server		serv(si, 8080);
+// 	ServerInfo	si;
+// 	Server		serv(si, 8080);
 
-// 	std::cout << "Si [" << si << "]" << std::endl;
-// 	std::cout << "Serv [" << serv << "]" << std::endl;
+// 	// std::cout << si << std::endl;
+// 	std::cout << serv << std::endl;
 // 	return 0;
 // }
 
