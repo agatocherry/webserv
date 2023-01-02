@@ -42,7 +42,7 @@ Server::Server(ServerInfo infos, int port)
 		perror("Error listen");
         return ;
 	}
-	
+	this->_error = "";
 	this->_default = &infos;
 	this->_infos.push_back(infos);
 	this->_size = this->_infos.size();
@@ -190,6 +190,10 @@ ServerInfo	Server::requestInfos() {
 
 
 	return *_default;
+}
+
+std::string	Server::getError(){
+	return _error;
 }
 
 std::ostream	&operator<<(std::ostream &x, Server serv)

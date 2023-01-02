@@ -16,6 +16,7 @@ class ServerInfo {
 		void	setAutoIndex(int autoIndex);
 		void	setAllow(std::string line);
 		void	setLoc(std::string uri, std::string root, std::string index, std::string allow);
+		std::string	getError();
 		std::string	getServerName();
 		std::string	getIp();
 		long	getClientSize();
@@ -23,6 +24,7 @@ class ServerInfo {
 		int	getAllow(std::string allow);
 		~ServerInfo();
 	private:
+		std::string	_error;
 		std::string	_ip;
 		std::string	_serverName;
 		long	_clientSize;

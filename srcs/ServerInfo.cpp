@@ -3,7 +3,8 @@
 ServerInfo::ServerInfo(void)
 {
 	// Default constructor arbitrary values set
-	this->_ip = "0.0.0.80";
+	this->_error = "";
+	this->_ip = "0.0.0.0";
 	this->_serverName = "localhost";
 	this->_clientSize = 0; 
 	this->_autoIndex = 0; 
@@ -25,7 +26,9 @@ void	ServerInfo::setIp(std::string line)
 		this->_ip = "127.0.0.1";
 	else
 		if (line.find(" ") != std::string::npos)
-			this->_ip = &line[line.find(" ")];
+			this->_ip = &line[line.find(" ") + 1];
+	if (this->_ip != "127.0.0.1" && this->_ip != "0.0.0.0")
+		this->_error = "ip address not valid";
 }
 
 void	ServerInfo::setClientSize(std::string line)
@@ -73,6 +76,11 @@ void	ServerInfo::setLoc(std::string uri, std::string root, std::string index, st
 	if (allow.find("DELETE") != std::string::npos)
 			tmp.allow[2] = 1;
 	this->_loc.push_back(tmp);
+}
+
+std::string	ServerInfo::getError()
+{
+	return (this->_error);
 }
 
 std::string ServerInfo::getServerName()

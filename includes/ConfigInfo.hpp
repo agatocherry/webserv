@@ -15,10 +15,12 @@ class ConfigInfo {
 		ConfigInfo&	operator=(ConfigInfo& copy);
 		std::map<int, Server>	parse(char *filename);
 		void	setSize(int size);
+		std::string getError();
 		int	getSize();
 		int	getMaxFd();
 		std::map<int, std::string>	getErrors();
 	private:
+		std::string	_error;
 		std::map<int, Server>	_servers;
 		std::map<int, std::string>	_error_files;
 		int	_maxFd;

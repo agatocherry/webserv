@@ -4,6 +4,19 @@ int main()
 {
 	ConfigInfo config;
 	std::cout << config;
+	ServerInfo si;
+	if (si.getError() != "")
+	{
+		std::cout << "Error: " << si.getError() << std::endl;
+		return 0;
+	}
+	si.setIp(" 0.0.0.0");
+	if (si.getError() != "")
+	{
+		std::cout << "Error: " << si.getError() << std::endl;
+		return 0;
+	}
+	std::cout << si << std::endl;
 	return 0;
 }
 

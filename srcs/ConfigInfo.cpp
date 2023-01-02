@@ -20,6 +20,10 @@ void ConfigInfo::setSize(int size){
 		this->_size = size;
 }
 
+std::string ConfigInfo::getError(){
+		return (this->_error);
+}
+
 int ConfigInfo::getSize(){
 		return (this->_size);
 }
