@@ -126,7 +126,7 @@ std::ostream	&operator<<(std::ostream &x, std::vector<Location> loc)
 	while (i < loc.size())
 	{
 		Location	tmp = loc.at(i);
-		x << "Location at(" << i << ") : ";
+		x << "Location at[" << i << "] : ";
 		x << tmp.uri << ", ";
 		x << tmp.root << ", ";
 		x << tmp.index;
@@ -145,6 +145,8 @@ std::ostream	&operator<<(std::ostream &x, std::vector<Location> loc)
 			x << ", ";
 			x << "DELETE ";
 		}
+		if (i < loc.size() - 1)
+			x << std::endl;
 		i++;
 	}
 	return (x);
@@ -153,6 +155,7 @@ std::ostream	&operator<<(std::ostream &x, std::vector<Location> loc)
 std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
 {
 	x << "**** ServerInfo ****" << std::endl;
+	x << inf.getServerName() << ", ";
 	x << inf.getIp() << ", ";
 	x << inf.getClientSize() << ", ";
 	x << inf.getAutoIndex();
@@ -171,6 +174,7 @@ std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
 		x << ", ";
 		x << "DELETE ";
 	}
+	x << std::endl;
 	x << inf._loc;
 	return (x);
 }

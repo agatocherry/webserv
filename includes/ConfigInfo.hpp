@@ -9,9 +9,10 @@ class Server;
 
 class ConfigInfo {
 	public:
-		ConfigInfo(void);
+		std::map<int, Server>	_servers;
+		ConfigInfo();
 		ConfigInfo(ConfigInfo& copy);
-		~ConfigInfo(void);
+		ConfigInfo(char *filename);
 		ConfigInfo&	operator=(ConfigInfo& copy);
 		std::map<int, Server>	parse(char *filename);
 		void	setErrorFiles();
@@ -20,10 +21,10 @@ class ConfigInfo {
 		int	getSize();
 		int	getMaxFd();
 		std::map<int, std::string>	getErrors();
+		~ConfigInfo();
 	private:
 		std::string	_error;
 		std::map<int, std::string>	_errorFiles;
-		std::map<int, Server>	_servers;
 		int	_maxFd;
 		int	_size;
 };

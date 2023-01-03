@@ -46,14 +46,3 @@ std::string File::getLine()
 	return line;
 }
 
-// Example for use :
-// int	main(int argc, char **argv)
-// {
-// 	File file(argv[argc - 1]);
-// 	std::cout << "File name : " << std::endl << file.getName() << std::endl << std::endl;
-// 	std::cout << "File getline :" << std::endl;
-// 	std::string tmp;
-// 	while(file.getEnd() == 0)
-// 		std::cout << file.getLine() << std::endl;
-// 	return 0;
-// }

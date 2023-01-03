@@ -58,6 +58,14 @@ Server::Server(Server& copy, int new_socket)
 	this->_size = this->_infos.size();
 }
 
+Server& Server::operator=(Server& copy)
+{
+	this->_socket = copy._socket;
+	this->_default = copy._default;
+	this->_infos = copy._infos;
+	this->_size = this->_infos.size();
+	return (*this);
+}
 
 Server::~Server(void)
 {

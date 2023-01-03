@@ -9,6 +9,7 @@ class ServerInfo;
 
 class Server {
 	public:
+		Server(void){};
 		Server(ServerInfo infos, int port = 80);
 		Server(Server& copy, int new_socket);
 		Server&	operator=(Server& copy);

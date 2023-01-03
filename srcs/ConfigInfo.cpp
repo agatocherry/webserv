@@ -12,11 +12,75 @@ ConfigInfo::ConfigInfo(ConfigInfo& copy){
 	this->setErrorFiles();
 }
 
-//ConfigInfo& ConfigInfo::operator=(ConfigInfo& copy){
-//}
+ConfigInfo::ConfigInfo(char *filename){
+	this->setSize(0);
+	this->_maxFd = 0;
+	this->setErrorFiles();
+	this->_servers = this->parse(filename);
+}
 
-//std::map<int, Server>   parse(char *filename){
-//}
+ConfigInfo& ConfigInfo::operator=(ConfigInfo& copy){
+	*this = copy;
+	return (*this);
+}
+
+std::map<int, Server>	ConfigInfo::parse(char *filename){
+	File	file(filename);
+	int	i = 0;
+	int	server = 0;
+	std::map<int, Server>	tmp;
+	ServerInfo	tmpInfo = ServerInfo();
+	while (i < file.getMaxLine()){
+		std::string	line = file.getLine();
+		if (line.find("server {") != std::string::npos){
+			if (server > 0)
+			{
+				Server tmpServer = Server(tmpInfo, 80);
+				tmp.insert(std::pair<int, Server>(server, tmpServer));
+				tmpInfo = ServerInfo();
+			}
+			server++;
+		}
+		else{
+			if (line.find("server_name") != std::string::npos)
+				tmpInfo.setServerName(line);
+			if (line.find("listen") != std::string::npos)
+				tmpInfo.setIp(line);
+			if (line.find("client_body_buffer_size") != std::string::npos)
+				tmpInfo.setClientSize(line);
+			if (line.find("allow_methods") != std::string::npos)
+				tmpInfo.setAllow(line);
+			while (line.find("location") != std::string::npos)
+			{
+				std::string uri = line;
+				std::string root = "";
+				std::string index = "";
+				std::string allow = "";
+				while (line.find("}") == std::string::npos)
+				{
+					line = file.getLine();
+					if (line.find("location") != std::string::npos)
+						break ;
+					if (line.find("root") != std::string::npos)
+						root = line;
+					if (line.find("index") != std::string::npos)
+						index = line;
+					if (line.find("allow_methods") != std::string::npos)
+						allow = line;
+					i++;
+				}
+				tmpInfo.setLoc(uri, root, index, allow);
+			}
+			i++;
+		}
+	}
+	if (server > 0)
+	{
+		Server tmpServer = Server(tmpInfo, 80);
+		tmp.insert(std::pair<int, Server>(server, tmpServer));
+	}
+	return (tmp);
+}
 
 void	ConfigInfo::setErrorFiles(){
 	std::map<int, std::string>	tmp;

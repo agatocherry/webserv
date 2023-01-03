@@ -2,21 +2,8 @@
 
 int main()
 {
-	ConfigInfo config;
+	ConfigInfo config((char *)"./config/default.conf");
 	std::cout << config;
-	ServerInfo si;
-	if (si.getError() != "")
-	{
-		std::cout << "Error: " << si.getError() << std::endl;
-		return 0;
-	}
-	si.setIp(" 0.0.0.0");
-	if (si.getError() != "")
-	{
-		std::cout << "Error: " << si.getError() << std::endl;
-		return 0;
-	}
-	std::cout << si << std::endl;
 	return 0;
 }
 
@@ -24,8 +11,7 @@ int main()
 // {
 // 	ServerInfo	si;
 // 	Server		serv(si, 8080);
-
-// 	// std::cout << si << std::endl;
+//	std::cout << si << std::endl;
 // 	std::cout << serv << std::endl;
 // 	return 0;
 // }
