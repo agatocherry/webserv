@@ -183,12 +183,15 @@ int	Server::sendResponse(std::map<int, std::string> errors) {
 }
 
 ServerInfo	Server::requestInfos() {
-	if (_infos.size() == 1)
-		return *(_infos.begin());
+	std::string	serv_name;
 
-	// determiner par server_name
+	serv_name = _request.substr(_request.find("Host: ") + 6);
+	serv_name = serv_name.substr(0, _serv_name.find("\r\n"));
 
-
+	for (std::vector<ServerInfo>::iterator it = _infos.begin(); it != _infos.end(); it++) {
+		if (serv_name == it->getServerName())
+			return *it;
+	}
 	return *_default;
 }
 
