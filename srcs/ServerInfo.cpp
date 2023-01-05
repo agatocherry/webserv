@@ -6,7 +6,7 @@ ServerInfo::ServerInfo(void)
 	this->_error = "";
 	this->_ip = "0.0.0.0";
 	this->_serverName = "localhost";
-	this->_clientSize = 0; 
+	this->_clientSize = 1000; 
 	this->_autoIndex = 0; 
 	this->_allow[0] = 0;
 	this->_allow[1] = 0;
@@ -14,13 +14,21 @@ ServerInfo::ServerInfo(void)
 	// this->_loc = NULL;
 }
 
-void	ServerInfo::setServerName(std::string line)
+int	ServerInfo::setServerName(std::string line)
 {
-	if (line.find(" ") != std::string::npos)
+	std::string	serverName = line;
+
+	if (serverName.find(" ") != std::string::npos) {
+		serverName.erase(0, serverName.find(" "));
+		while (serverName.find(" ")) {
+
+		}
 		this->_serverName = &line[line.find(" ") + 1];
+	}
+	return 0;
 }
 
-void	ServerInfo::setIp(std::string line)
+int	ServerInfo::setIp(std::string line)
 {
 	if (line.find("localhost") != std::string::npos)
 		this->_ip = "127.0.0.1";
@@ -31,18 +39,18 @@ void	ServerInfo::setIp(std::string line)
 		this->_error = "ip address not valid";
 }
 
-void	ServerInfo::setClientSize(std::string line)
+int	ServerInfo::setClientSize(std::string line)
 {
 	if (line.find(" ") != std::string::npos)
 		this->_clientSize = atoi(&line[line.find(" ")]);
 }
 
-void	ServerInfo::setAutoIndex(int autoIndex)
+int	ServerInfo::setAutoIndex(int autoIndex)
 {
 	this->_autoIndex = autoIndex;
 }
 
-void	ServerInfo::setAllow(std::string line)
+int	ServerInfo::setAllow(std::string line)
 // GET POST DELETE : 0 si interdit, 1 si autorise
 {
 	if (line.find("GET") != std::string::npos)
@@ -53,29 +61,9 @@ void	ServerInfo::setAllow(std::string line)
 			this->_allow[2] = 1;
 }
 
-void	ServerInfo::setLoc(std::string uri, std::string root, std::string index, std::string allow)
+int	ServerInfo::setLoc(Location& loc)
 {
-	Location tmp;
-	if (uri.find(" ") != std::string::npos)
-	{
-		tmp.uri = &uri[uri.find(" ") + 1];
-		tmp.uri[tmp.uri.find(" ")] = '\0';
-		tmp.uri[tmp.uri.find("{")] = '\0';
-	}
-	if (root.find(" ") != std::string::npos)
-		tmp.root = &root[root.find(" ") + 1];
-	if (index.find(" ") != std::string::npos)
-		tmp.index = &index[index.find(" ") + 1];
-	tmp.allow[0] = 0;
-	tmp.allow[1] = 0;
-	tmp.allow[2] = 0;
-	if (allow.find("GET") != std::string::npos)
-			tmp.allow[0] = 1;
-	if (allow.find("POST") != std::string::npos)
-			tmp.allow[1] = 1;
-	if (allow.find("DELETE") != std::string::npos)
-			tmp.allow[2] = 1;
-	this->_loc.push_back(tmp);
+	this->_loc.push_back(loc);
 }
 
 std::string	ServerInfo::getError()

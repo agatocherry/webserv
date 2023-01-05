@@ -7,15 +7,6 @@ int main()
 	return 0;
 }
 
-// int	main()
-// {
-// 	ServerInfo	si;
-// 	Server		serv(si, 8080);
-//	std::cout << si << std::endl;
-// 	std::cout << serv << std::endl;
-// 	return 0;
-// }
-
 // int main(int argc, char **argv)
 // {
 // 	WebServer	server;
@@ -26,8 +17,9 @@ int main()
 // 		filename = argv[1];
 // 	else
 // 		std::cerr << "Usage : ./webserv [configuration file]" << std::endl;
-// 	server.parsefile(filename);
-// 	server.launch();
+// 	if (server.parsefile(filename)) {
+// 		server.launch();
+//	}
 // 	server.clean();
 // 	return 0;
 // }

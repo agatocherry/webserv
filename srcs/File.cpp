@@ -8,7 +8,7 @@ File::File(char *filename)
 	this->maxLine = 0;
 	this->end = 0;
 	ifstream fd(filename);
-	while (getline (fd, tmp))
+	while (getline(fd, tmp))
 	{
 		this->content.push_back(tmp);
 		maxLine++;

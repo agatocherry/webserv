@@ -8,8 +8,6 @@
 
 class Server;
 
-// mettre une fonction globale qui renvoit un tableau d'erreurs
-
 class WebServer {
 	
 	public:
@@ -24,7 +22,7 @@ class WebServer {
 	
 	private:
 		
-//		ConfigInfo				_config;
+		ConfigInfo				_config;
 		std::map<int, Server>	_servers;
 		std::map<int, Server>	_acceptfds;
 		std::map<int, Server>	_writablefds;	

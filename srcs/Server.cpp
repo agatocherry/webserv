@@ -1,6 +1,6 @@
 #include "../includes/webserv.hpp"
 
-Server::Server(ServerInfo infos, int port)
+Server::Server(ServerInfo* infos, int port)
 {
 
 	// Generating socket file descriptor
@@ -43,7 +43,7 @@ Server::Server(ServerInfo infos, int port)
         return ;
 	}
 	this->_error = "";
-	this->_default = &infos;
+	this->_default = infos;
 	this->_infos.push_back(infos);
 	this->_size = this->_infos.size();
 	this->_status = 200;
@@ -88,7 +88,7 @@ void	Server::setSocket(int socket_descriptor)
 	this->_socket = socket_descriptor;
 }
 
-void	Server::addNewInfo(ServerInfo& new_infos)
+void	Server::addNewInfo(ServerInfo* new_infos)
 {
 	// Adds a new ServerInfo into the current
 	// Server's vector (of infos),
@@ -191,8 +191,8 @@ int	Server::chunkedRequest() {
 // }
 
 ServerInfo	Server::requestInfos() {
-	if (_infos.size() == 1)
-		return *(_infos.begin());
+	// if (_infos.size() == 1)
+	// 	return *(_infos.begin());
 
 	// determiner par server_name
 

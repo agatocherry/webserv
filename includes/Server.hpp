@@ -10,10 +10,10 @@ class ServerInfo;
 class Server {
 	public:
 		Server(void){};
-		Server(ServerInfo infos, int port = 80);
+		Server(ServerInfo* infos, int port = 80);
 		Server(Server& copy, int new_socket);
 		Server&	operator=(Server& copy);
-		void	addNewInfo(ServerInfo& new_infos);
+		void	addNewInfo(ServerInfo* new_infos);
 		void	setSocket(int socket_descriptor);
 		int	accept_fd();
 		int	getSocket();
@@ -25,7 +25,7 @@ class Server {
 		ServerInfo	requestInfos();
 		std::string	getError();
 		ServerInfo	*_default;
-		std::vector<ServerInfo>	_infos;
+		std::vector<ServerInfo *>	_infos;
 		~Server(void);
 	private:
 		std::string	_error;

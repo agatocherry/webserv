@@ -4,27 +4,37 @@
 #pragma once
 
 #include "webserv.hpp"
+#include "File.hpp"
 
 class Server;
 
 class ConfigInfo {
+	
 	public:
-		std::map<int, Server>	_servers;
+		
 		ConfigInfo();
 		ConfigInfo(ConfigInfo& copy);
 		ConfigInfo(char *filename);
-		ConfigInfo&	operator=(ConfigInfo& copy);
+		~ConfigInfo();
+		
 		std::map<int, Server>	parse(char *filename);
+		
 		void	setErrorFiles();
+		void	setErrorFile(std::string line);
 		void	setSize(int size);
-		std::string getError();
+		
+		std::map<int, std::string>	getErrors();
+		int getError();
 		int	getSize();
 		int	getMaxFd();
-		std::map<int, std::string>	getErrors();
-		~ConfigInfo();
+		
+		Location	setupLoc(File& file, std::string curr_line);
+	
 	private:
-		std::string	_error;
+		std::map<int, Server>		_servers;
 		std::map<int, std::string>	_errorFiles;
+		
+		int	_err;
 		int	_maxFd;
 		int	_size;
 };

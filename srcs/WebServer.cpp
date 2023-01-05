@@ -1,7 +1,5 @@
 #include "../includes/webserv.hpp"
 
-// mettre une fonction globale qui renvoit un tableau d'erreurs
-
 WebServer::WebServer(void) {
 	return ;
 }
@@ -13,7 +11,9 @@ WebServer::~WebServer(void) {
 int	WebServer::parsefile(char *filename) {
 	
 	_servers = _config.parse(filename);
-	// gestion d'erreur
+	if (_config.getError() == 1) {
+		return 0;
+	}
 
 	_max_fd = _config.getMaxFd();
 
@@ -21,7 +21,7 @@ int	WebServer::parsefile(char *filename) {
 	for (std::map<int, Server>::iterator it = _servers.begin(); it != _servers.end(); it++) {
 		FD_SET(it->second.getSocket(), &_sockets);
 	}
-	return 0;
+	return 1;
 }
 
 int	WebServer::launch(void) {
@@ -67,7 +67,7 @@ int	WebServer::launch(void) {
 
 			if (FD_ISSET(fd, &writefds)) {
 				std::map<int, Server>::iterator tmp;
-				it->second.sendResponse(getErrors());
+				it->second.sendResponse(_config.getErrors());
 
 				tmp = it++;
 				_writablefds.erase(tmp);
