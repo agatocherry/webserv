@@ -19,7 +19,26 @@
 #include <stdlib.h>
 #include <errno.h>
 
-// #define METHOD 403
+struct Location
+{
+	std::string	uri; 
+	std::string	root;
+	std::string	index;
+	std::string	cgi;
+	int	        allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
+	long		clientSize;
+	std::vector<Location>	loc;
+};
+
+#include "AutoIndex.hpp"
+#include "CGI.hpp"
+#include "ClientRequest.hpp"
+#include "ConfigInfo.hpp"
+#include "File.hpp"
+#include "Server.hpp"
+#include "ServerInfo.hpp"
+#include "WebServer.hpp"
+// #include "HttpResponse.hpp"
 
 #define BLANK "\033[0m"
 #define RED "\033[31m"
@@ -32,13 +51,6 @@
 #define MAX_FD 2048
 #define REQUEST_SIZE 30000
 
-struct Location
-{
-	std::string	uri; 
-	std::string	root;
-	std::string	index;
-	int	        allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
-};
 
 
 #endif
