@@ -4,7 +4,6 @@
 #pragma once
 
 #include "webserv.hpp"
-#include "WebServer.hpp"
 
 class	HttpResponse {
 
@@ -19,7 +18,7 @@ class	HttpResponse {
     // 5: Verifier s'il y a d'autres ligne obligatoires
     // 6: Ajouter le header et le body dans la variable response (attention a la syntaxe requise "\r\n"...)
 
-		std::sring	getResponse() const;
+		std::string	getResponse() const;
 
 	private:
         int         _autoindex;
@@ -30,6 +29,6 @@ class	HttpResponse {
         std::string _body;
         std::string _response;
 
-}
+};
 
 #endif

@@ -12,7 +12,7 @@
 
 NAME = webserv 
 CC = c++
-CFLAGS = #-Wall -Wextra -Werror -std=c++98
+CFLAGS = -std=c++98 #-Wall -Wextra -Werror -std=c++98
 INCLUDES = -I ./includes/
 
 SRCS = srcs/Server.cpp \

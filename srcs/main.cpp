@@ -1,12 +1,9 @@
 #include "../includes/webserv.hpp"
 
-int	main()
+int main()
 {
-	ServerInfo	si;
-	Server		serv(si, 8080);
-
-	std::cout << "Si [" << si << "]" << std::endl;
-	std::cout << "Serv [" << serv << "]" << std::endl;
+	ConfigInfo config((char *)"./config/default.conf");
+	std::cout << config;
 	return 0;
 }
 
@@ -20,8 +17,9 @@ int	main()
 // 		filename = argv[1];
 // 	else
 // 		std::cerr << "Usage : ./webserv [configuration file]" << std::endl;
-// 	server.parsefile(filename);
-// 	server.launch();
+// 	if (server.parsefile(filename)) {
+// 		server.launch();
+//	}
 // 	server.clean();
 // 	return 0;
 // }
