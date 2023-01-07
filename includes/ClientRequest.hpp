@@ -26,11 +26,12 @@ class	ClientRequest {
 
 	private:
 		ServerInfo	_info;
+		Location	_loc;
 		std::string	_request;
 		std::string	_method;
 		std::string	_uri;
-		int			_status;
 		std::string	_file;
+		int			_status;
 
 }
 

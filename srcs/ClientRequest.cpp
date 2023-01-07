@@ -11,7 +11,7 @@ ClientRequest::~ClientRequest() {
 }
 
 int	ClientRequest::checkMethod() {
-
+	
 }
 
 int	ClientRequest::isMethod(std::string word) {
@@ -24,26 +24,28 @@ int	ClientRequest::isMethod(std::string word) {
 
 int	ClientRequest::checkSyntax() {
 	
-	if (!_request || _request == "") {
-		_status = 305; // a verifier
+	if (!_request.length() || (_request.find("Host:") == std::string::npos && _request.find("HOST:") == std::string::npos)) {
+		_status = 400;
 		return _status;
 	}
-	
+
 	std::string	firstLine = _request.substr(0, _request.find("\r\n") + 2);
 	std::string	word = firstLine.substr(0, firstLine.find(" "));
 	
 	for (int count = 1; count < 4; count++) {
 		if (count == 1) {
-			if (!isMethod(word))
-				_status = 305;
+			if (!isMethod(word)) {
+				_status = 400;
 				return _status;
+			}
+			_method = word;
 		}
 		if (count == 2) {
 			_uri = word;
 		}
 		if (count == 3) {
 			if (word != "HTTP/1.1\r\n") {
-				_status = 305;
+				_status = 400;
 				return _status;
 			}
 		}
@@ -53,11 +55,51 @@ int	ClientRequest::checkSyntax() {
 
 	std::string copy_request = _request;
 	std::string	bodyLine;
+	std::string	header_field;
+	std::string	value;
+	int			body_size = 0;
 
-	copy_request.erase(0, firstLine.length());
-	bodyLine = copy_request.substr(0, copy_request.find("\r\n"));
+	copy_request.erase(0, copy_request.find("\r\n") + 2);
+	bodyLine = copy_request.substr(0, copy_request.find("\r\n") + 2);
 	
+	while (bodyLine.length() && bodyLine != "\r\n") {
+		if (bodyLine.find(":") == std::string::npos) {
+			_status = 400;
+			return _status;
+		}
+		
+		header_field = bodyLine.substr(0, bodyLine.find(":"));
+		value = bodyLine.substr(bodyLine.find(":") + 1);
 
+		if (value.find("\r\n") == std::string::npos || !header_field.length() || !value.length()) {
+			_status = 400;
+			return _status;
+		}
+
+		if (header_field.find("Content-Length") != std::string::npos || header_field.find("CONTENT-LENGTH") != std::string::npos) {
+			if (value.front() == ' ')
+				value.erase(0, 1);
+			body_size = atoi(value);
+		}
+
+		copy_request.erase(0, copy_request.find("\r\n") + 2);
+		bodyLine = copy_request.substr(0, copy_request.find("\r\n") + 2);
+	}
+
+	if (!bodyLine.length())
+		return 200;
+	
+	copy_request.erase(0, 2);
+	if (copy_request.size() != body_size) {
+		_status = 400;
+		return _status;
+	}
+
+	if (body_size > _info.getClientSize()) {
+		_status = 413;
+		return _status;
+	}
+	return 200;
 }
 
 std::string	ClientRequest::determinateFile() {

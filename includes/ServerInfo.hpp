@@ -15,7 +15,7 @@ class ServerInfo {
 		int	setAllow(std::string line);
 		int	setLoc(Location& loc);
 		std::string	getError();
-		std::string	getServerName();
+		std::string	getServerNames();
 		std::string	getIp();
 		long	getClientSize();
 		int	getAutoIndex();
