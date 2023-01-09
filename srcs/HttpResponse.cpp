@@ -11,11 +11,10 @@ HttpResponse::HttpResponse(std::string file, ConfigInfo conf, int autoindex)
 	// 		conf = param file containing the map to [error_files] + [clientSize]
 	// 		autoindex = 1 or 0, indicator of auto-generation of an index
 	// 			if a folder is set as param-1 [file-to-open]
-	// 1st : Verify if file exists
+	// 1st : Verify if file exists, if not set error to 404.
 	// 2nd : Open it and retrieve its content into a string
-	// 3rd : DEBUG, print the content in outstream
-	//  	 if the file didn't exist, set status to 400, ERROR
-	// 4th : Generate a header + body according to situation
+	// 3rd : DEBUG, print the content in outstream,
+	// 4th : Generate a header + body according to situation (ongoing)
 	
 	int	pid;
 
@@ -30,7 +29,15 @@ HttpResponse::HttpResponse(std::string file, ConfigInfo conf, int autoindex)
 
 		int	ret = open(path.c_str());
 		if (ret < 0)
-			this->_status = 400;			// TEMPORARY 400
+		{
+			perror("");
+			char		*tmp;
+			read(2, tmp, 99999);
+			std::string	tmp_string = tmp;
+			free(tmp);
+			if (tmp_string == "Not found")		//exact same error description
+				this->_status = 404;			// TEMPORARY 404
+		}
 		else
 		{	
 			filestream.open(path.c_str());
@@ -40,17 +47,22 @@ HttpResponse::HttpResponse(std::string file, ConfigInfo conf, int autoindex)
 		}
 		close(ret);
 	}
-	// Specific Error file detection 400, 401, 402, 403, 404 etc.
+	// Specific Error file detection
+	// 400, 404, 405 & 408 ONLY (for now)
 	// to be determined...
 	// temporary 400 set
 	if (this->_status >= 400)
 	{
-		this->_header = "HTTP/1.1 400 ERROR\r\n";
-		this->_body = "Error 400 temporary\r\n";
+		this->_header = "HTTP/1.1 ";
+		this->header = this->header + this->status + " ";
+		this->header = this->header + "ERROR\r\n";
+		this->_body = "Error 400 temporary\r\n";	// specific error file body
 	}
 	if (this->_status >= 200 && this->_status < 300)
 	{
-		this->_header = "HTTP/1.1 200 OK\r\n";
+		this->_header = "HTTP/1.1 ";
+		this->header = this->header + this->status + " ";
+		this->_header = this->header + "OK\r\n";
 		this->_body = this->file_content;
 	}
 	this->_header = this->_header + "Content-Lenght: ";	// Content-length = clientSize
