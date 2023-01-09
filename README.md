@@ -161,14 +161,39 @@ The CGI (Common Gateway Interface) is a interface which allows a web server send
 
 > Example with a form : in an online form, candidacy or registration, the input datas are process by a CGI before send to a server
 
-### Useful variables
+### How to use
 
-| Variables            	| Meaning                                                               	|
-|----------------	|---------------------------------------------------------------	|
-| CONTENT_LENGTH 	| Size in octets of the content                                 	|
-| CONTENT_TYPE   	| Type of the content                                           	|
-| QUERY_STRING   	| String as URL                                                 	|
-| REQUEST_METHOD 	| Contains the use methods (GET, POST, HEAD, PUT, DELETE, LINK) 	|
+D’après mes recherches, on peut utilisé une librairie qui est un CGI pour le C++. Elle s’appelle [CGICC](https://www.gnu.org/software/cgicc/doc/index.html). 
+
+Ont peut la télécharger [ici](https://www.howtoinstall.me/ubuntu/18-04/libcgicc-dev/)
+
+Pour pouvoir l’ajouté au code, voici les librairie à ajouté :
+
+```cpp
+#include <cgicc/CgiDefs.h> 
+#include <cgicc/Cgicc.h> 
+#include <cgicc/HTTPHTMLHeader.h> 
+#include <cgicc/HTMLClasses.h>
+```
+
+Et enfin, pour compiler il faut rajouté un flag :
+
+```bash
+g++ -o cpp_get.cgi test.cpp -lcgicc
+```
+
+Il y a [ici une liste des variables d’environnement que CGICC à besoin](http://www.cgi101.com/book/ch3/text.html)
+
+[Ici un example du fichier upload](https://www.gnu.org/software/cgicc/doc/upload_8cpp-source.html) :
+
+```cpp
+const_file_iterator file = cgi.getFile("userfile");
+if(file != cgi.getFiles().end()) {
+	cout << HTTPContentHeader(file->getDataType());
+	file->writeToStream(cout);
+	return EXIT_SUCCESS;
+}
+```
 
 # Code Implementation
 
