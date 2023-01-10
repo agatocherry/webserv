@@ -7,6 +7,16 @@
 
 class ServerInfo {
 	public:
+
+	/* fonction getLoc() qui renvoit un vector<Location>
+	ajouter PUT
+	si allow_methods n'est pas precise, mettre tout a 1, pour server_info (pas pour location)
+	si root n'est pas precise, faute de configuration ou route par defaut ? (pas pour location)
+	pour location mettre clientSize par defaut a celui de serverInfo
+	mettre autoindex a off part defaut
+	enlever l'etoile dans location *.bla
+	*/
+
 		ServerInfo();
 		int	setServerName(std::string name);
 		int	setIp(std::string line);

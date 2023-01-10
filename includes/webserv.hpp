@@ -28,6 +28,18 @@ struct Location
 	int	        allow[3]; // GET POST DELETE : 0 si interdit, 1 si autorise
 	long		clientSize;
 	std::vector<Location>	loc;
+
+	Location&	operator=(Location& copy) {
+		uri = copy.uri;
+		root = copy.root;
+		index = copy.index;
+		cgi = copy.cgi;
+		allow[0] = copy.allow[0];
+		allow[1] = copy.allow[1];
+		allow[2] = copy.allow[2];
+		clientSize = copy.clientSize;
+		loc = copy.loc;
+	}
 };
 
 #include "AutoIndex.hpp"

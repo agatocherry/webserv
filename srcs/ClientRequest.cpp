@@ -2,8 +2,10 @@
 
 ClientRequest::ClientRequest(ServerInfo info, std::string request) : _info(info), _request(request), _status(200), _file("") {
 	checkSyntax();
+	determinateLoc();
 	checkMethod();
-	_file = determinateFile();
+	checkSize();
+	determinateFile();
 }
 
 ClientRequest::~ClientRequest() {
@@ -11,7 +13,15 @@ ClientRequest::~ClientRequest() {
 }
 
 int	ClientRequest::checkMethod() {
-	
+	if (_method == "GET" || !_loc.allow[0])
+		_status = 405;
+	if (_method == "POST" || !_loc.allow[1])
+		_status = 405;
+	if (_method == "DELETE" || !_loc.allow[2])
+		_status = 405;
+	// if (_method == "PUT" || !_loc.allow[3])
+	// 	_status = 405;
+	return _status;
 }
 
 int	ClientRequest::isMethod(std::string word) {
@@ -95,43 +105,72 @@ int	ClientRequest::checkSyntax() {
 		return _status;
 	}
 
-	if (body_size > _info.getClientSize()) {
-		_status = 413;
-		return _status;
-	}
 	return 200;
 }
 
-std::string	ClientRequest::determinateFile() {
-	Location	loc = getLoc();
-	std::string	file_uri = _uri.substr(loc.uri.lenght());
+int	ClientRequest::checkSize() {
+	return _status;
+}
 
-	_file = loc.root + file_uri;
-	if (loc.index && loc.index != "" && _file.back() == '/')
-		_file += loc.index;
+std::string	ClientRequest::determinateFile() {
+	std::string	file_uri = _uri.substr(_loc.uri.lenght());
+
+	_file = _loc.root + file_uri;
+	if (!_info.getAutoIndex() && _file.back() == '/') {
+		if (_loc.index.size() && _loc.index != "")
+			_file += _loc.index;
+		else
+			_file += "index.html";
+	}
 	return _file;
 }
 
-Location	ClientRequest::getLoc() {
-	std::string	copy_uri = _uri.substr(0, _uri.find_last_of('/') + 1);
-	Location	def;
+int	ClientRequest::determinateLoc() {
+	std::string	ext;
+	std::string	tmp_uri;
+	std::vector<Location>	tmp_vec = _info.getLoc();
 
-	for (std::vector<Location>::iterator it = _info._loc.begin(); it !+ info._loc.end(); it++) {
-		if (it->uri == "/") {
-			def = *it;
-			break ;
-		}
-	}
-	while (copy_uri != "/") {
-		for (std::vector<Location>::iterator it = _info._loc.begin(); it !+ info._loc.end(); it++) {
-			if (it->uri == copy_uri) {
-				return *it;
+	_loc.root = _info.getRoot();
+	_loc.index = _info.getIndex();
+	_loc.uri = "/";
+	_loc.allow[0] = _info.getAllow("GET");
+	_loc.allow[1] = _info.getAllow("POST");
+	_loc.allow[2] = _info.getAllow("DELETE");
+	_loc.clientSize = _info.getClientSize();
+
+	if (_uri.find(".") != std::string::npos)
+		ext = _uri.substr(_uri.find("."));
+	_uri.erase(_uri.find_last_of('/'));
+	tmp_uri = _uri;
+
+	while (tmp_vec.size() != 0) {
+		int	loop = 1;
+		for (std::vector<Location>::iterator it = tmp_vec.begin(); it != tmp_vec.end() && loop; it++) {
+			if (_uri == it->uri || ext == it->uri) {
+				if (it->root.size())
+					_loc.root = it->root;
+				if (it->index.size())
+					_loc.index = it->index;
+				if (it->clientSize != _loc.clientSize)
+					_loc.clientSize = it->clientSize;
+				if (it->cgi.size())
+					_loc.cgi = it->cgi;
+				if (it->allow[0] || it->allow[1] || it->allow[2]) {
+					_loc.allow[0] = it->allow[0];
+					_loc.allow[1] = it->allow[1];
+					_loc.allow[2] = it->allow[2];
+				}
+				if (ext == it->uri)
+					return _status;
+				tmp_vec = it->loc;
+				loop = 0;
+				_uri = tmp_uri;
 			}
 		}
-		copy_uri.erase(copy_uri.find_last_of('/'), 1);
-		copy_uri = copy_uri.substr(0, copy_uri.find_last_of('/') + 1);
+		if (loop)
+			_uri.erase(_uri.find_last_of('/') + 1);
 	}
-	return def;
+	return _status;
 }
 
 int	ClientRequest::getStatus() const {
