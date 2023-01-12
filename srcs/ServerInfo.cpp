@@ -34,6 +34,20 @@ int	ServerInfo::setIp(std::string line)
 	else
 		if (line.find(" ") != std::string::npos)
 			this->_ip = &line[line.find(" ") + 1];
+	if (this->_ip.find(":") != std::string::npos)
+		this->_ip.erase(this->_ip.find(":"));
+	int point = 0;
+	int	i = 0;
+	while(this->_ip[i])
+	{
+		if (this->_ip[i] == '.')
+			point++;
+		if (point > 3)
+			this->_ip[i] = '\0';
+		i++;
+	}
+	if (this->_ip != "127.0.0.1" && this->_ip != "0.0.0.0")
+		return 1;
 	return 0;
 }
 

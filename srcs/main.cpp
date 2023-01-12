@@ -4,7 +4,7 @@ int main()
 {
 	ServerInfo info;
 
-	info.setRoot("	root ./YoupiBanane");
+	info.setIp("	listen 127.0.0.1.0.0.0.127:81");
 	// ConfigInfo config((char *)"./config/default.conf");
 	// std::cout << config;
 	return 0;
