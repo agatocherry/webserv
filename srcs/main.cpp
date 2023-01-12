@@ -4,7 +4,7 @@ int main()
 {
 	ServerInfo info;
 
-	info.setIp("	listen 127.0.0.1.0.0.0.127:81");
+	info.setClientSize("client_max_body_size sqq0qdsq");
 	// ConfigInfo config((char *)"./config/default.conf");
 	// std::cout << config;
 	return 0;

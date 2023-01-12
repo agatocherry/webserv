@@ -53,8 +53,18 @@ int	ServerInfo::setIp(std::string line)
 
 int	ServerInfo::setClientSize(std::string line)
 {
+	std::string tmp = &line[line.find(" ") + 1];
+	int i = 0;
+	while (tmp[i])
+	{
+		if (tmp[i] < '0' || tmp[i] > '9')
+			return 1;
+		i++;
+	}
 	if (line.find(" ") != std::string::npos)
 		this->_clientSize = atoi(&line[line.find(" ")]);
+	if (this->_clientSize == 0)
+		return 1;
 	return 0;
 }
 
