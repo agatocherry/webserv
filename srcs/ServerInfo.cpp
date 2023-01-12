@@ -3,9 +3,8 @@
 ServerInfo::ServerInfo(void)
 {
 	// Default constructor arbitrary values set
-	this->_error = "";
 	this->_ip = "0.0.0.0";
-	this->_serverName = "localhost";
+	// this->_serverName = "localhost";
 	this->_clientSize = 1000; 
 	this->_autoIndex = 0; 
 	this->_allow[0] = 0;
@@ -23,7 +22,7 @@ int	ServerInfo::setServerName(std::string line)
 		while (serverName.find(" ")) {
 
 		}
-		this->_serverName = &line[line.find(" ") + 1];
+		//this->_serverName = &line[line.find(" ") + 1];
 	}
 	return 0;
 }
@@ -35,8 +34,6 @@ int	ServerInfo::setIp(std::string line)
 	else
 		if (line.find(" ") != std::string::npos)
 			this->_ip = &line[line.find(" ") + 1];
-	if (this->_ip != "127.0.0.1" && this->_ip != "0.0.0.0")
-		this->_error = "ip address not valid";
 }
 
 int	ServerInfo::setClientSize(std::string line)
@@ -45,10 +42,10 @@ int	ServerInfo::setClientSize(std::string line)
 		this->_clientSize = atoi(&line[line.find(" ")]);
 }
 
-int	ServerInfo::setAutoIndex(int autoIndex)
-{
-	this->_autoIndex = autoIndex;
-}
+// int	ServerInfo::setAutoIndex(int autoIndex)
+// {
+// 	this->_autoIndex = autoIndex;
+// }
 
 int	ServerInfo::setAllow(std::string line)
 // GET POST DELETE : 0 si interdit, 1 si autorise
@@ -66,15 +63,10 @@ int	ServerInfo::setLoc(Location& loc)
 	this->_loc.push_back(loc);
 }
 
-std::string	ServerInfo::getError()
-{
-	return (this->_error);
-}
-
-std::string ServerInfo::getServerName()
-{
-	return(this->_serverName);
-}
+// std::string ServerInfo::getServerName()
+// {
+// 	return(this->_serverName);
+// }
 
 std::string ServerInfo::getIp()
 {
@@ -143,7 +135,7 @@ std::ostream	&operator<<(std::ostream &x, std::vector<Location> loc)
 std::ostream	&operator<<(std::ostream &x, ServerInfo inf)
 {
 	x << "**** ServerInfo ****" << std::endl;
-	x << inf.getServerName() << ", ";
+	// x << inf.getServerName() << ", ";
 	x << inf.getIp() << ", ";
 	x << inf.getClientSize() << ", ";
 	x << inf.getAutoIndex();
