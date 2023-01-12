@@ -68,6 +68,17 @@ int	ServerInfo::setLoc(Location& loc)
 	return 0;
 }
 
+int ServerInfo::setRoot(std::string line)
+{
+	if (line.find(" ") != std::string::npos)
+	{
+		this->_root = &line[line.find(" ") + 1];
+		if (this->_root[this->_root.size() - 1] != '/')
+			this->_root.push_back('/');
+	}
+	return 0;
+}
+
 // std::string ServerInfo::getServerName()
 // {
 // 	return(this->_serverName);

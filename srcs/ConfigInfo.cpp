@@ -19,7 +19,7 @@ ConfigInfo::ConfigInfo(char *filename){
 	this->setSize(0);
 	this->_maxFd = 0;
 	this->setErrorFiles();
-	// this->_servers = this->parse(filename);
+	this->_servers = this->parse(filename);
 }
 
 std::map<int, Server>	ConfigInfo::parse(char *filename){
@@ -54,8 +54,8 @@ std::map<int, Server>	ConfigInfo::parse(char *filename){
 						_servers.insert(std::make_pair(port, Server(&tmpInfo, port)));
 					}
 				}
-				// else if (line.find("root ") != std::string::npos)
-				// 	ret = tmpInfo.setRoot(line); NOT WORKING
+				else if (line.find("root ") != std::string::npos)
+					ret = tmpInfo.setRoot(line);
 				// else if (line.find("index ") != std::string::npos)
 				// 	ret = tmpInfo.setIndex(line); NOT WORKING
 				else if (line.find("client_body_buffer_size ") != std::string::npos)
@@ -109,7 +109,7 @@ Location	ConfigInfo::setupLoc(File& file, std::string curr_line) {
 	std::string	line = file.getLine();
 
 	tmp.uri = curr_line.substr(curr_line.find(" " + 1), curr_line.find("{") - 1);
-	// if (tmp.uri.find(".") == std::string::npos && tmp.uri.back() != '/') NOT WORKING
+	// if (tmp.uri.find(".") == std::string::npos && tmp.uri.back() != '/') NOT WORKING (back is C++11)
 	// 	tmp.uri += "/";
 	tmp.allow[0] = 0;
 	tmp.allow[1] = 0;

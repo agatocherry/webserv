@@ -2,8 +2,11 @@
 
 int main()
 {
-	ConfigInfo config((char *)"./config/default.conf");
-	std::cout << config;
+	ServerInfo info;
+
+	info.setRoot("	root ./YoupiBanane");
+	// ConfigInfo config((char *)"./config/default.conf");
+	// std::cout << config;
 	return 0;
 }
 
