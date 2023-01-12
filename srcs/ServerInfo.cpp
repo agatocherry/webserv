@@ -34,18 +34,21 @@ int	ServerInfo::setIp(std::string line)
 	else
 		if (line.find(" ") != std::string::npos)
 			this->_ip = &line[line.find(" ") + 1];
+	return 0;
 }
 
 int	ServerInfo::setClientSize(std::string line)
 {
 	if (line.find(" ") != std::string::npos)
 		this->_clientSize = atoi(&line[line.find(" ")]);
+	return 0;
 }
 
-// int	ServerInfo::setAutoIndex(int autoIndex)
-// {
-// 	this->_autoIndex = autoIndex;
-// }
+int	ServerInfo::setAutoIndex(int autoIndex)
+{
+	this->_autoIndex = autoIndex;
+	return 0;
+}
 
 int	ServerInfo::setAllow(std::string line)
 // GET POST DELETE : 0 si interdit, 1 si autorise
@@ -56,11 +59,13 @@ int	ServerInfo::setAllow(std::string line)
 			this->_allow[1] = 1;
 	if (line.find("DELETE") != std::string::npos)
 			this->_allow[2] = 1;
+	return 0;
 }
 
 int	ServerInfo::setLoc(Location& loc)
 {
 	this->_loc.push_back(loc);
+	return 0;
 }
 
 // std::string ServerInfo::getServerName()

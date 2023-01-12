@@ -20,7 +20,7 @@ class ConfigInfo {
 		std::map<int, Server>	parse(char *filename);
 		
 		void	setErrorFiles();
-		void	setErrorFile(std::string line);
+		int	setErrorFile(std::string line);
 		void	setSize(int size);
 		
 		std::map<int, std::string>	getErrors();
